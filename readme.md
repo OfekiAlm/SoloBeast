@@ -40,10 +40,12 @@ Some Notes you should keep in mind:
 1. The authentication works with Email&password (Firebase) after we are sending a payload of data to the database relating to the user.
 2. You can change whatever you'll like in this project for your purposes.
 
-In order to work with the Real-Time Database (Firebase)
+In order to work with the Real-Time Database (Firebase),
 We have to change some rules at https://console.firebase.google.com
+
 Realtime Database/Rules: Change all values to true. If you're not going to change that so you will not be able to use this database. (From my research and experience (maybe there's a way))
 ![](../../OneDrive/מסמכים/Lightshot/Screenshot_8.png)
+
 Should look like this after you're done.
 
 ## Usage
