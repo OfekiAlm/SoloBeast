@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SoloBeast</string>
+    <string name="go_to_sign_up">Not signed up already? <font color='#8463f6'>Register</font></string>
 </resources>
