@@ -19,7 +19,7 @@ public class SplashAct extends AppCompatActivity {
                         sleep(150);
                         delay = delay + 100;
                     }
-                    startActivity(new Intent(SplashAct.this, MainActivity.class));
+                    startActivity(new Intent(SplashAct.this, LoginAct.class));
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();
