@@ -29,8 +29,12 @@ public class LoginAct extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
-
+        sign_out();
         init();
+    }
+
+    private void sign_out() {
+        mAuth.signOut();
     }
 
     private void init(){
