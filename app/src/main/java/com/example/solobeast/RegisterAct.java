@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RegisterAct extends AppCompatActivity {
     EditText EmailEdt, PasswordEdt;
@@ -44,13 +45,8 @@ public class RegisterAct extends AppCompatActivity {
 //    }
 
     public void register(View view) {
-        ArrayList tasks=new ArrayList<task>();
-        task a = new task(5,"Ofek");
-        tasks.add(a);
         User my_user = new User(
-            "ddd",
-                tasks,
-                null
+            "ddd"
         );
 
         mAuth.createUserWithEmailAndPassword(EmailEdt.getText().toString(), PasswordEdt.getText().toString())
