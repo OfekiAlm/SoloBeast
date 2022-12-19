@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/reward"
+        android:icon="@drawable/ic_baseline_contact_mail"
+        android:title="Reward"
+        android:contentDescription="rewards activity"
+
+        />
+    <item
+        android:id="@+id/homescreen"
+        android:icon="@drawable/ic_baseline_home"
+        android:title="Home"
+        android:contentDescription="Homepage"/>
+    <item
+        android:id="@+id/profile"
+        android:icon="@drawable/ic_baseline_person"
+        android:title="My Profile"
+        android:contentDescription="profile"
+        />
+
+</menu>
