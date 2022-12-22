@@ -90,16 +90,14 @@
             android:id="@+id/bottomAppBar"
             app:fabCradleMargin="10dp"
             app:fabCradleRoundedCornerRadius="10dp"
-            app:fabCradleVerticalOffset="10dp"
+            app:fabCradleVerticalOffset="20dp"
             android:theme="@style/Theme.MaterialComponents"
             >
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/bottomNavigationView"
-                android:layout_marginRight="16dp"
                 app:menu="@menu/bottom_bar_navigation"
-                android:background="#000000"
 
                 />
         </com.google.android.material.bottomappbar.BottomAppBar>
@@ -110,8 +108,6 @@
             android:id="@+id/fab"
             android:src="@drawable/ic_baseline_add"
             app:layout_anchor="@id/bottomAppBar"
-            android:layout_marginEnd="10dp"
-
             />
 
 
