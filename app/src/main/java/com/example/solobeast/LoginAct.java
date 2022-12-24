@@ -4,27 +4,23 @@ package com.example.solobeast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.RuntimeExecutionException;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LoginAct extends AppCompatActivity {
-    EditText EmailEdt,PasswordEdt;
-    Button Submit_btn;
-    TextView moveToRegister;
     FirebaseAuth mAuth;
     TextInputEditText username, password;
     @Override
@@ -33,7 +29,9 @@ public class LoginAct extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
+        //\\
         sign_out();
+        //NEED TO BE REMOVED AFTER TESTING\\
         init();
     }
 
@@ -42,8 +40,8 @@ public class LoginAct extends AppCompatActivity {
     }
 
     private void init(){
-        username = findViewById(R.id.editTextTextEmailAddress);
-        password = findViewById(R.id.editTextTextPassword);
+        username = (TextInputEditText) findViewById(R.id.editTextTextEmailAddress);
+        password = (TextInputEditText) findViewById(R.id.editTextTextPassword);
         //moveToRegister = findViewById(R.id.move_screen);
 //
 //        moveToRegister.setOnClickListener(new View.OnClickListener() {
@@ -53,31 +51,43 @@ public class LoginAct extends AppCompatActivity {
 //            }
 //        });
     }
-    private void check_validation_credentials() {
-        if(username.getText().toString() == null){
+    private boolean check_validation_credentials() {
+        if(username.getText().length() ==0){
             username.requestFocus();
+            return false;
         }
-        if(password.getText().toString() == null){
+        if(password.getText().length() ==0){
             password.requestFocus();
+            return false;
         }
+        return true;
     }
 
     public void login(View view){
-        check_validation_credentials();
-
-        Log.d("AuthData","Username: "+ username.getText().toString() +"\n"+"Password: "+ password.getText().toString());
-        mAuth.signInWithEmailAndPassword(username.getText().toString(),password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    Log.d("AuthData","signInWithCredential:success");
-                    FirebaseUser user = mAuth.getCurrentUser();
-                    updateUI(user);
-                }else{
-                    Log.w("AuthData", "signInWithCredential:failure", task.getException());
+        boolean validation_credentials_are_valid= check_validation_credentials();
+        if(validation_credentials_are_valid) {
+            Log.d("AuthData", "Username: " + username.getText().toString() + "\n" + "Password: " + password.getText().toString());
+            try {
+                mAuth.signInWithEmailAndPassword(username.getText().toString(), password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Log.d("AuthData", "signInWithCredential:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(user);
+                        } else {
+                            Log.w("AuthData", "signInWithCredential:failure", task.getException());
+                            Toast.makeText(getApplicationContext(), task.getResult().toString(), Toast.LENGTH_LONG);
+                        }
+                    }
+                });
+            } catch (RuntimeExecutionException e) {
+                if (e.getCause() instanceof FirebaseAuthInvalidCredentialsException) {
+                    Toast.makeText(getApplicationContext(),"Auth falied try to sign in again please",Toast.LENGTH_LONG);
                 }
             }
-        });
+
+        }
     }
     private void move_screen(String email){
         Intent i = new Intent(LoginAct.this, MainActivity.class);
