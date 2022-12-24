@@ -4,6 +4,9 @@ package com.example.solobeast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +26,7 @@ public class LoginAct extends AppCompatActivity {
     Button Submit_btn;
     TextView moveToRegister;
     FirebaseAuth mAuth;
+    TextInputEditText username, password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,31 +42,31 @@ public class LoginAct extends AppCompatActivity {
     }
 
     private void init(){
-        EmailEdt = findViewById(R.id.editTextTextEmailAddress);
-        PasswordEdt = findViewById(R.id.editTextTextPassword);
-        moveToRegister = findViewById(R.id.move_screen);
-
-        moveToRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(LoginAct.this, RegisterAct.class));
-            }
-        });
+        username = findViewById(R.id.editTextTextEmailAddress);
+        password = findViewById(R.id.editTextTextPassword);
+        //moveToRegister = findViewById(R.id.move_screen);
+//
+//        moveToRegister.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(LoginAct.this, RegisterAct.class));
+//            }
+//        });
     }
     private void check_validation_credentials() {
-        if(EmailEdt.getText().toString() == null){
-            EmailEdt.requestFocus();
+        if(username.getText().toString() == null){
+            username.requestFocus();
         }
-        if(PasswordEdt.getText().toString() == null){
-            PasswordEdt.requestFocus();
+        if(password.getText().toString() == null){
+            password.requestFocus();
         }
     }
 
     public void login(View view){
         check_validation_credentials();
 
-
-        mAuth.signInWithEmailAndPassword(EmailEdt.getText().toString(),PasswordEdt.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        Log.d("AuthData","Username: "+ username.getText().toString() +"\n"+"Password: "+ password.getText().toString());
+        mAuth.signInWithEmailAndPassword(username.getText().toString(),password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
