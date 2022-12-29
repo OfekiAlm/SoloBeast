@@ -3,4 +3,6 @@
     <string name="go_to_sign_up">Not signed up already? <font color='#8463f6'>Register</font></string>
     <string name="action_nav_open">open</string>
     <string name="action_nav_close">close</string>
+    <string name="login_email">email</string>
+    <string name="login_password">password</string>
 </resources>
