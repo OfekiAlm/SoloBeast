@@ -42,7 +42,8 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:navigationIcon="@drawable/ic_baseline_menu"
-                        app:title="@string/app_name" />
+                        app:title="@string/app_name"
+                        />
 
                     <ImageView
                         android:id="@+id/imageView"
