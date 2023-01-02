@@ -30,14 +30,11 @@ public class LoginAct extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         //\\
-        sign_out();
         //NEED TO BE REMOVED AFTER TESTING\\
         init();
     }
 
-    private void sign_out() {
-        mAuth.signOut();
-    }
+
 
     private void init(){
         username = (TextInputEditText) findViewById(R.id.editTextTextEmailAddress);

@@ -22,6 +22,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.solobeast.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
    // private String username = null;
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ActivityMainBinding binding;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         replaceFragment(new HomeFragment());
         binding.bottomNavigationView.setSelectedItemId(R.id.homescreen);
         binding.bottomNavigationView.setBackground(null);
+
+        mAuth = FirebaseAuth.getInstance();
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
@@ -116,12 +121,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_auth:
                 Log.i("AuthData", "LogOut:Success");
+                sign_out();
+                startActivity(new Intent(this,LoginAct.class));
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
+    public void sign_out() {
+        mAuth.signOut();
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser == null){
+            startActivity(new Intent(this,LoginAct.class));
+        }
+    }
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
