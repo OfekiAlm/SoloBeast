@@ -15,21 +15,49 @@ import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+
+import com.example.solobeast.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
    // private String username = null;
     private TextView DisplayUsername;
+    ActivityMainBinding binding;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        replaceFragment(new HomeFragment());
+        binding.bottomNavigationView.setSelectedItemId(R.id.homescreen);
+        binding.bottomNavigationView.setBackground(null);
+
+        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.homescreen:
+                    replaceFragment(new HomeFragment());
+                    break;
+                case R.id.profile:
+                    replaceFragment(new ProfileFragment());
+                    break;
+                case R.id.reward:
+                    replaceFragment(new RewardFragment());
+                    break;
+            }
+            return true;
+        });
+
+
         init();
         navdrawer_init();
+
 //        Bundle extras = getIntent().getExtras();
 //        username = (String) extras.get("username_of_user");
         //String data = getIntent().getExtras().getString("username_of_user","User");
@@ -92,5 +120,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout, fragment);
+        fragmentTransaction.commit();
     }
 }

@@ -60,20 +60,10 @@
 
             </com.google.android.material.appbar.AppBarLayout>
 <!--            main content goes here -->
-            <androidx.core.widget.NestedScrollView
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="adsssssssssssssssssssssssssssssssssssssssssssss"
-                android:textSize="100sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-            </androidx.core.widget.NestedScrollView>
+                android:layout_height="match_parent"
+                android:id="@+id/frame_layout"/>
 
 <!--            main content ends-->
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -87,30 +77,30 @@
         <com.google.android.material.bottomappbar.BottomAppBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
             android:id="@+id/bottomAppBar"
-            app:fabCradleMargin="10dp"
-            app:fabCradleRoundedCornerRadius="10dp"
-            app:fabCradleVerticalOffset="20dp"
+            android:layout_gravity="bottom"
             android:theme="@style/Theme.MaterialComponents"
-            >
+            android:background="@color/white"
+            app:fabCradleMargin="3dp"
+            app:fabCradleRoundedCornerRadius="50dp">
             <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginRight="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/bottomNavigationView"
-                app:menu="@menu/bottom_bar_navigation"
-
-                />
+                android:layout_marginEnd="20dp"
+                app:labelVisibilityMode="labeled"
+                android:background="@android:color/transparent"
+                app:menu="@menu/bottom_bar_navigation"/>
         </com.google.android.material.bottomappbar.BottomAppBar>
-
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/fab"
+            android:backgroundTint="@color/white"
             android:src="@drawable/ic_baseline_add"
             app:layout_anchor="@id/bottomAppBar"
-            />
+            app:maxImageSize="40dp"
+            app:tint ="@color/purple_200"/>
+
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
