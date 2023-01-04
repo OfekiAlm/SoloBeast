@@ -15,14 +15,14 @@ Task rewarding app for your assessments on day to day life
 
 ## Technologies Used
 - XML&Java.
-- SQLITE.
 - Firebase.
 
 
 
 ## Features
 List the ready features here:
-
+- SplashScreen
+- Login/Signup into a user with email&password
 
 ## Screenshot/s
 Not Yet.
