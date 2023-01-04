@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#6A55B5"
-    tools:context=".SplashAct">
+    tools:context=".Extras.SplashAct">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

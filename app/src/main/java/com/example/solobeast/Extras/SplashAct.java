@@ -1,9 +1,12 @@
-package com.example.solobeast;
+package com.example.solobeast.Extras;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import com.example.solobeast.R;
+import com.example.solobeast.ui.Auth.LoginAct;
 
 public class SplashAct extends AppCompatActivity {
 

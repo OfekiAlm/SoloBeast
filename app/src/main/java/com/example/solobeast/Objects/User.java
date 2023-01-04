@@ -1,10 +1,10 @@
-package com.example.solobeast;
+package com.example.solobeast.Objects;
 
 import java.util.ArrayList;
 
 public class User {
     public String picture;
-    public ArrayList<task> tasks;
+    public ArrayList<Task> tasks;
     public ArrayList<Reward> rewards;
 
 

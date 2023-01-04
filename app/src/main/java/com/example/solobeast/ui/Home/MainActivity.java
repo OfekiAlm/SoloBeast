@@ -1,4 +1,4 @@
-package com.example.solobeast;
+package com.example.solobeast.ui.Home;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -8,30 +8,39 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.Window;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.solobeast.ui.Home.Fragments.HomeFragment;
+import com.example.solobeast.Objects.Task;
+import com.example.solobeast.ui.Home.Fragments.ProfileFragment;
+import com.example.solobeast.R;
+import com.example.solobeast.ui.Home.Fragments.RewardFragment;
 import com.example.solobeast.databinding.ActivityMainBinding;
+import com.example.solobeast.ui.Auth.LoginAct;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
    // private String username = null;
-    private TextView DisplayUsername;
+    TextView DisplayUsername;
     ActivityMainBinding binding;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
-    private FirebaseAuth mAuth;
+    FirebaseAuth mAuth;
+    List<Task> taskList;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +50,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         replaceFragment(new HomeFragment());
         binding.bottomNavigationView.setSelectedItemId(R.id.homescreen);
         binding.bottomNavigationView.setBackground(null);
+
+
+
+
+
+
+
+
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -122,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_auth:
                 Log.i("AuthData", "LogOut:Success");
                 sign_out();
-                startActivity(new Intent(this,LoginAct.class));
+                startActivity(new Intent(this, LoginAct.class));
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);

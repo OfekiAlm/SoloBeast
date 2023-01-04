@@ -3,21 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeFragment">
-<androidx.core.widget.NestedScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
+    tools:context=".ui.Home.Fragments.HomeFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Hello From Home Fragment\n\n
-sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
-        android:textSize="50sp"/>
-</androidx.core.widget.NestedScrollView>
-    <!-- TODO: Update blank fragment layout -->
+        android:layout_height="match_parent">
+        
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/task_item"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </FrameLayout>

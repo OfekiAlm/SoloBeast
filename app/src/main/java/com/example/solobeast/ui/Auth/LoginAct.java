@@ -1,9 +1,11 @@
-package com.example.solobeast;
+package com.example.solobeast.ui.Auth;
 
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.solobeast.ui.Home.MainActivity;
+import com.example.solobeast.R;
 import com.google.android.gms.tasks.RuntimeExecutionException;
 import com.google.android.material.textfield.TextInputEditText;
 

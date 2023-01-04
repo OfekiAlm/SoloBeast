@@ -16,7 +16,7 @@
         tools:targetApi="31">
         <!-- ^ Removes ActionBar from all screens   (Theme)    -->
         <activity
-            android:name=".SplashAct"
+            android:name=".Extras.SplashAct"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.Home.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Design.NoActionBar"
         >
@@ -35,9 +35,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginAct"
+        <activity android:name=".ui.Auth.LoginAct"
             android:exported="true"/>
-        <activity android:name=".RegisterAct"
+        <activity android:name=".ui.Auth.RegisterAct"
             android:exported="true"/>
     </application>
 
