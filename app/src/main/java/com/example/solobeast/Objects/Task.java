@@ -76,4 +76,18 @@ public class Task {
     public String getDifficulty() {
         return this.difficulty;
     }
+
+    public String getDesc() {
+        return this.description;
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "time='" + this.time + '\'' +
+                ", name='" + this.name + '\'' +
+                ", description='" + this.description + '\'' +
+                ", difficulty='" + this.difficulty + '\'' +
+                '}';
+    }
 }

@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,8 +32,8 @@ public class LoginAct extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
-        //\\
-        //NEED TO BE REMOVED AFTER TESTING\\
+
+
         init();
     }
 
@@ -41,14 +42,14 @@ public class LoginAct extends AppCompatActivity {
     private void init(){
         username = (TextInputEditText) findViewById(R.id.editTextTextEmailAddress);
         password = (TextInputEditText) findViewById(R.id.editTextTextPassword);
-        //moveToRegister = findViewById(R.id.move_screen);
-//
-//        moveToRegister.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(LoginAct.this, RegisterAct.class));
-//            }
-//        });
+        TextView moveToRegister = findViewById(R.id.move_screen);
+
+        moveToRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginAct.this, RegisterAct.class));
+            }
+        });
     }
     private boolean check_validation_credentials() {
         if(username.getText().length() ==0){
