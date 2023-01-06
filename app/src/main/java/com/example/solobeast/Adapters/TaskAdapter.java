@@ -60,6 +60,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             taskNameTv = itemView.findViewById(R.id.taskName);
             difficultyTv = itemView.findViewById(R.id.diff);
             timeTv = itemView.findViewById(R.id.time);
+
             FloatingActionButton startTaskFAB = itemView.findViewById(R.id.fab_start_task);
             startTaskFAB.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
@@ -68,6 +69,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                     moveToTimerScreen(t);
                 }
             });
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -91,7 +93,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             i.putExtra("selected_task_desc",t.getDesc());
             i.putExtra("selected_task_time",t.getTime());
             i.putExtra("selected_task_diff",t.getDifficulty());
-
             context.startActivity(i);
         }
 

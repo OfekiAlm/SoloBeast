@@ -39,17 +39,17 @@ public class HomeFragment extends Fragment implements RecyclerViewFunctionalitie
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),1));
         tasksList = new ArrayList<Task>();
-        Task t1 = new Task("Run","00:10","lkjb","HARD");
-        t1.setTime(t1.timeRepresentation());
+        Task t1 = new Task("Run","00:01","lkjb","HARD");
+        t1.setTime(t1.getTime());
         tasksList.add(t1);
         Task t2 = new Task("Learn Math","01:20","asdasd","HARD");
-        t2.setTime(t2.timeRepresentation());
+        t2.setTime(t2.getTime());
         tasksList.add(t2);
         Task t3 = new Task("Do app dev","24:00","ddd","HARD");
-        t3.setTime(t3.timeRepresentation());
+        t3.setTime(t3.getTime());
         tasksList.add(t3);
         Task t4 = new Task("Overthink","30:10","ddda","HARD");
-        t4.setTime(t4.timeRepresentation());
+        t4.setTime(t4.getTime());
         tasksList.add(t4);
 
 

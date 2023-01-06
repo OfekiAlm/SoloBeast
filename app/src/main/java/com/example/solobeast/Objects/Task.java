@@ -43,8 +43,8 @@ public class Task {
     }
     ///\\\
 
-    public String timeRepresentation(){
-        List<String> arrayList = Arrays.asList(this.time.split(":"));
+    public static String timeRepresentation(String time){
+        List<String> arrayList = Arrays.asList(time.split(":"));
         String hours = arrayList.get(0);
         String minutes = arrayList.get(1);
         if(hours.equals("00")){ return minutes + " minutes";}
