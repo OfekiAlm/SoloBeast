@@ -66,11 +66,10 @@ public class TimerService extends Service {
     public void onDestroy() {
         super.onDestroy();
         Log.i("Value","FINIHED");
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
             stopForeground(Service.STOP_FOREGROUND_REMOVE);
         }
         timerThread.stopTimer();
         timerThread = null;
-
     }
 }

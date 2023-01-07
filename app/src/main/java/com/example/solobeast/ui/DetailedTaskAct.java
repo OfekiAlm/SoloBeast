@@ -16,6 +16,7 @@ public class DetailedTaskAct extends AppCompatActivity {
         setContentView(R.layout.activity_detailed_task);
 
         init();
+        changeBackgroundColorAsTaskDiff();
 
     }
     private void init(){
@@ -26,6 +27,12 @@ public class DetailedTaskAct extends AppCompatActivity {
             taskDiff = getIntent().getStringExtra("selected_task_diff");
         }
 
+        taskNameTv = findViewById(R.id.task_name_et);
+//        taskDescTv = findViewById(R.id.);
+//        taskDiffTv = findViewById(R.id.);
+//        taskTimeTv = findViewById(R.id.);
+    }
+    private void changeBackgroundColorAsTaskDiff(){
 
     }
 }

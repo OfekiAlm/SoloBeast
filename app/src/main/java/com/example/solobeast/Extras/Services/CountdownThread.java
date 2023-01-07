@@ -22,8 +22,6 @@ public class CountdownThread extends Thread{
 
         }
         Log.i("services","TimerStopped:Success");
-
-
     }
 
     public int getTime(){return this.time;}

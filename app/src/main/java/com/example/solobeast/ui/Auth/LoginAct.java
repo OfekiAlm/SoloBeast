@@ -25,7 +25,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginAct extends AppCompatActivity {
     FirebaseAuth mAuth;
-    TextInputEditText username, password;
+    TextInputEditText editTextEmail, editTextpassword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,8 +40,8 @@ public class LoginAct extends AppCompatActivity {
 
 
     private void init(){
-        username = (TextInputEditText) findViewById(R.id.editTextTextEmailAddress);
-        password = (TextInputEditText) findViewById(R.id.editTextTextPassword);
+        editTextEmail = (TextInputEditText) findViewById(R.id.editTextTextEmailAddress_Register);
+        editTextpassword = (TextInputEditText) findViewById(R.id.editTextTextPassword_Register);
         TextView moveToRegister = findViewById(R.id.move_screen);
 
         moveToRegister.setOnClickListener(new View.OnClickListener() {
@@ -51,13 +51,15 @@ public class LoginAct extends AppCompatActivity {
             }
         });
     }
+
+    // TODO: MAKE THIS CODE CLEANER, DUPLICATED CODE IN LoginAct.java
     private boolean check_validation_credentials() {
-        if(username.getText().length() ==0){
-            username.requestFocus();
+        if(editTextEmail.getText().length() ==0){
+            editTextEmail.requestFocus();
             return false;
         }
-        if(password.getText().length() ==0){
-            password.requestFocus();
+        if(editTextpassword.getText().length() ==0){
+            editTextpassword.requestFocus();
             return false;
         }
         return true;
@@ -66,9 +68,9 @@ public class LoginAct extends AppCompatActivity {
     public void login(View view){
         boolean validation_credentials_are_valid= check_validation_credentials();
         if(validation_credentials_are_valid) {
-            Log.d("AuthData", "Username: " + username.getText().toString() + "\n" + "Password: " + password.getText().toString());
+            Log.d("AuthData", "Username: " + editTextEmail.getText().toString() + "\n" + "Password: " + editTextpassword.getText().toString());
             try {
-                mAuth.signInWithEmailAndPassword(username.getText().toString(), password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                mAuth.signInWithEmailAndPassword(editTextEmail.getText().toString(), editTextpassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
