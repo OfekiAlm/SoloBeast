@@ -1,25 +1,29 @@
 package com.example.solobeast.Objects;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 import java.util.Arrays;
 import java.util.List;
 
+@IgnoreExtraProperties
+//FOR FIREBASE\\
 public class Task {
 
-    private String time;
-    private String name;
-    private String description;
-    private String difficulty;
-
-    public Task(String name,String time,String description,String difficulty) {
+    public String time;
+    public String name;
+    public String description;
+    public String difficulty;
+    public String key;
+    public Task(){
+        //DEFAULT FOR FIREBASE.\\
+    }
+    public Task(String name,String time,String description,String difficulty,String key) {
         if(timeIsValid(time)){ this.time = time;}
         if(nameIsValid(name)){ this.name = name;}
         if(descIsValid(description)){this.description = description;}
         if(diffIsValid(difficulty)){this.difficulty = difficulty;}
+        this.key = key;
     }
-
-
-    ///VALIDATION FUNCTIONS\\\
-
 
     private boolean diffIsValid(String difficulty) {
         if(difficulty.equals("EASY") || difficulty.equals("MEDIUM") || difficulty.equals("HARD"))
@@ -28,7 +32,7 @@ public class Task {
     }
 
     private boolean descIsValid(String description) {
-        if(description.isEmpty()) return false;
+        //if(description.isEmpty()) return false;
         return true;
     }
 
@@ -77,10 +81,13 @@ public class Task {
         return this.difficulty;
     }
 
-    public String getDesc() {
+    public String getDescription() {
         return this.description;
     }
 
+    public String getKey() {
+        return this.key;
+    }
     @Override
     public String toString() {
         return "Task{" +
@@ -89,5 +96,17 @@ public class Task {
                 ", description='" + this.description + '\'' +
                 ", difficulty='" + this.difficulty + '\'' +
                 '}';
+    }
+
+    public void setDesc(String description) {
+        this.description = description;
+    }
+
+    public void setDiff(String diff) {
+        this.difficulty = diff;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }

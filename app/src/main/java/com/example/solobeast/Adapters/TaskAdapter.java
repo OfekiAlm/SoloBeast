@@ -3,6 +3,7 @@ import com.example.solobeast.Objects.Task;
 import com.example.solobeast.R;
 import com.example.solobeast.ui.TaskTimerAct;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.ValueEventListener;
 
 import android.content.Context;
 import android.content.Intent;
@@ -90,7 +91,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         private void moveToTimerScreen(Task t) {
             Intent i = new Intent(context, TaskTimerAct.class);
             i.putExtra("selected_task_name",t.getName());
-            i.putExtra("selected_task_desc",t.getDesc());
+            i.putExtra("selected_task_desc",t.getDescription());
             i.putExtra("selected_task_time",t.getTime());
             i.putExtra("selected_task_diff",t.getDifficulty());
             context.startActivity(i);

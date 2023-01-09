@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
@@ -19,6 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.solobeast.ui.DetailedTaskAct;
 import com.example.solobeast.ui.Home.Fragments.HomeFragment;
 import com.example.solobeast.Objects.Task;
 import com.example.solobeast.ui.Home.Fragments.ProfileFragment;
@@ -26,6 +28,7 @@ import com.example.solobeast.R;
 import com.example.solobeast.ui.Home.Fragments.RewardFragment;
 import com.example.solobeast.databinding.ActivityMainBinding;
 import com.example.solobeast.ui.Auth.LoginAct;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,14 +36,11 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-   // private String username = null;
-    TextView DisplayUsername;
     ActivityMainBinding binding;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
+    FloatingActionButton addBtn;
     FirebaseAuth mAuth;
-    List<Task> taskList;
-    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,14 +50,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         replaceFragment(new HomeFragment());
         binding.bottomNavigationView.setSelectedItemId(R.id.homescreen);
         binding.bottomNavigationView.setBackground(null);
+        addBtn = (FloatingActionButton) binding.addButtonFab.findViewById(R.id.add_button_fab);
 
-
-
-
-
-
-
-
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), DetailedTaskAct.class);
+                i.putExtra("from_intent","Add");
+                startActivity(i);
+            }
+        });
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -80,22 +82,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         init();
         navdrawer_init();
 
-//        Bundle extras = getIntent().getExtras();
-//        username = (String) extras.get("username_of_user");
-        //String data = getIntent().getExtras().getString("username_of_user","User");
-        //DisplayUsername.setText("Hello world " + data);
-
-//        String[] username_split=username.split("@");
-//        String username_sofi = username_split[0];
-        //DisplayUsername.setText("Hello world " + username);
-
-
 
 
     }
     private void init(){
        //DisplayUsername= findViewById(R.id.display_tv);
     }
+
     private void navdrawer_init(){
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

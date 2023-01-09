@@ -11,7 +11,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="match_parent"
-        android:layout_height="600dp"
+        android:layout_height="630dp"
         android:layout_marginVertical="60dp"
         app:cardCornerRadius="15dp"
 
@@ -50,7 +50,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/task_name_et"
                     android:layout_width="304dp"
-                    android:layout_height="48dp"
+                    android:layout_height="55dp"
                     android:layout_gravity="center"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
@@ -80,9 +80,9 @@
                 android:hint="Description">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/task_name_et1"
+                    android:id="@+id/task_desc_et"
                     android:layout_width="304dp"
-                    android:layout_height="48dp"
+                    android:layout_height="55dp"
                     android:layout_gravity="center"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
@@ -107,12 +107,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:clickable="false"
-                android:hint="Name of task">
+                android:hint="Time">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/task_name_et2"
+                    android:id="@+id/task_time_et"
                     android:layout_width="304dp"
-                    android:layout_height="48dp"
+                    android:layout_height="55dp"
                     android:layout_gravity="center"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
@@ -142,9 +142,9 @@
                 android:hint="Difficulty">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/task_name_et3"
+                    android:id="@+id/task_diff_et"
                     android:layout_width="304dp"
-                    android:layout_height="48dp"
+                    android:layout_height="55dp"
                     android:layout_gravity="center"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
@@ -157,7 +157,7 @@
 
         </LinearLayout>
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
+            android:id="@+id/fab_edit_add_task"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
