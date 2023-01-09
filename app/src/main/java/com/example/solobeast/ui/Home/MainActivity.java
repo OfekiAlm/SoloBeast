@@ -29,6 +29,7 @@ import com.example.solobeast.R;
 import com.example.solobeast.ui.Home.Fragments.RewardFragment;
 import com.example.solobeast.databinding.ActivityMainBinding;
 import com.example.solobeast.ui.Auth.LoginAct;
+import com.example.solobeast.ui.MailContactAct;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -126,6 +127,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_contact:
                 Log.i("MoveScreen", "MoveToContact  Screen:Success");
+                Intent moveToMailContact = new Intent(this, MailContactAct.class);
+                startActivity(moveToMailContact);
                 break;
             case R.id.nav_donate:
                 Log.i("MoveScreen", "MoveToDonateScreen:Success");
