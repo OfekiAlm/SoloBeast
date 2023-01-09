@@ -79,13 +79,13 @@ public class LoginAct extends AppCompatActivity {
                             updateUI(user);
                         } else {
                             Log.w("AuthData", "signInWithCredential:failure", task.getException());
-                            Toast.makeText(getApplicationContext(), task.getResult().toString(), Toast.LENGTH_LONG);
+                            Toast.makeText(getApplicationContext(), task.getResult().toString(), Toast.LENGTH_LONG).show();
                         }
                     }
                 });
             } catch (RuntimeExecutionException e) {
                 if (e.getCause() instanceof FirebaseAuthInvalidCredentialsException) {
-                    Toast.makeText(getApplicationContext(),"Auth falied try to sign in again please",Toast.LENGTH_LONG);
+                    Toast.makeText(getApplicationContext(),"Auth falied try to sign in again please",Toast.LENGTH_LONG).show();
                 }
             }
 
