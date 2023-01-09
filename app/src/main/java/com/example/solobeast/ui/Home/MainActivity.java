@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -128,6 +129,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_donate:
                 Log.i("MoveScreen", "MoveToDonateScreen:Success");
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.paypal.com/donate/?hosted_button_id=G7LXD4YAGLL5Y"));
+                startActivity(browserIntent);
                 break;
             case R.id.nav_auth:
                 Log.i("AuthData", "LogOut:Success");
