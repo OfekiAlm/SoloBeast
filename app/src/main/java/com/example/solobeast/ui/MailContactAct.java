@@ -3,6 +3,7 @@ package com.example.solobeast.ui;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -20,13 +21,16 @@ public class MailContactAct extends AppCompatActivity {
         init();
 
         submitMail.setOnClickListener(view -> {
-            Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
-            emailIntent.setType("text/plain");
+            Intent emailIntent = new Intent(Intent.ACTION_SEND);
+            emailIntent.setType("message/rfc822");
             emailIntent.putExtra(Intent.EXTRA_EMAIL,new String[]{"ofekalm100@gmail.com"});
             emailIntent.putExtra(Intent.EXTRA_SUBJECT, emailTitleTv.getEditableText().toString()); //title
             emailIntent.putExtra(Intent.EXTRA_TEXT, emailBodyTv.getEditableText().toString()); // description
-            startActivity(emailIntent);
+            emailIntent.setType("text/html");
+            startActivity(Intent.createChooser(emailIntent,
+                    "Send Email Using: "));
         });
+
     }
 
     private void init(){

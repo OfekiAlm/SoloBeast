@@ -63,7 +63,8 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/frame_layout"/>
+                android:id="@+id/frame_layout"
+                android:layout_marginTop="56dp"/>
 
 <!--            main content ends-->
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -116,16 +116,13 @@ public class RegisterAct extends AppCompatActivity {
 
                                 FirebaseDatabase.getInstance().getReference("Users")
                                         .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                        .setValue(my_user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                    Log.d(TAG, "AddToDatabase:success");
-                                                    Toast.makeText(getApplicationContext(), "YES", Toast.LENGTH_LONG).show();
-                                                } else {
-                                                    Log.d(TAG, "AddToDatabase:failure");
-                                                    Toast.makeText(getApplicationContext(), "NO", Toast.LENGTH_LONG).show();
-                                                }
+                                        .setValue(my_user).addOnCompleteListener(task1 -> {
+                                            if (task1.isSuccessful()) {
+                                                Log.d(TAG, "AddToDatabase:success");
+                                                Toast.makeText(getApplicationContext(), "YES", Toast.LENGTH_LONG).show();
+                                            } else {
+                                                Log.d(TAG, "AddToDatabase:failure");
+                                                Toast.makeText(getApplicationContext(), "NO", Toast.LENGTH_LONG).show();
                                             }
                                         });
 
@@ -166,7 +163,6 @@ public class RegisterAct extends AppCompatActivity {
     }
     private void updateUI() {
         Intent i = new Intent(this, MainActivity.class);
-
         startActivity(i);
     }
 
