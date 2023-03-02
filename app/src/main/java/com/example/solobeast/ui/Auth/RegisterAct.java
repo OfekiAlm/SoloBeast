@@ -3,8 +3,11 @@ package com.example.solobeast.ui.Auth;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -33,6 +36,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -45,6 +49,7 @@ public class RegisterAct extends AppCompatActivity {
     FloatingActionButton takePicBtn;
     CircleImageView circleImageView;
     Bitmap imageBitmap;
+    AlertDialog.Builder alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +59,27 @@ public class RegisterAct extends AppCompatActivity {
         init();
         RegisterOnResult_and_takePicFromCamera();
         takePicBtn.setOnClickListener(view -> {
-            Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            activityResultLauncher.launch(i);
+
+            alertDialog
+                    .setMessage("Choose your way to provide image")
+                    .setTitle("Provide Image");
+
+            alertDialog.setPositiveButton("Camera", (dialogInterface, i) -> {
+                dialogInterface.cancel();
+                Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                activityResultLauncher.launch(camera);
+            });
+            alertDialog.setNegativeButton("Storage", (dialogInterface, i) -> {
+                dialogInterface.cancel();
+                Intent storage = new Intent(Intent.ACTION_PICK);
+                storage.setType("image/*");
+
+                activityResultLauncher.launch(storage);
+            });
+            AlertDialog alert = alertDialog.create();
+            alert.show();
         });
+
     }
 
     private void init(){
@@ -67,13 +90,8 @@ public class RegisterAct extends AppCompatActivity {
 
 
         TextView moveToLogin = findViewById(R.id.move_screen);
-
-        moveToLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(RegisterAct.this, LoginAct.class));
-            }
-        });
+        alertDialog = new AlertDialog.Builder(this);
+        moveToLogin.setOnClickListener(view -> startActivity(new Intent(RegisterAct.this, LoginAct.class)));
     }
     // TODO: MAKE THIS CODE CLEANER, DUPLICATED CODE IN LoginAct.java
     private boolean check_validation_credentials() {
@@ -91,13 +109,22 @@ public class RegisterAct extends AppCompatActivity {
     private void RegisterOnResult_and_takePicFromCamera(){
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        Bitmap bitmap = (Bitmap) result.getData().getExtras().get("data");
-                        circleImageView.setImageBitmap(bitmap);
-                        imageBitmap = bitmap;
+                    System.out.println(result);
+                    System.out.println(result.getData());
+                    if(result.getResultCode() == RESULT_OK && result.getData() != null) {
+                        Bitmap bitmapConvertable;
+                        Intent bitmap = result.getData();
+                        Uri uri = bitmap.getData();
+                        try {
+                            bitmapConvertable = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        circleImageView.setImageBitmap(bitmapConvertable);
+                        imageBitmap = bitmapConvertable;
                     }
                     else if(result.getResultCode() == RESULT_CANCELED){
-                        Toast.makeText(getBaseContext(),"You canceled the picture",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(),"You canceled the process",Toast.LENGTH_LONG).show();
                     }
                 });
     }
@@ -147,7 +174,7 @@ public class RegisterAct extends AppCompatActivity {
             storageReference = FirebaseStorage.getInstance().getReference();
             //CONVERTS TO PNG FILE\\
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 5, stream);
             byte[] data = stream.toByteArray();
             //\\
             StorageReference imageRef = storageReference.child("profile-images/" + FirebaseAuth.getInstance().getCurrentUser().getUid());

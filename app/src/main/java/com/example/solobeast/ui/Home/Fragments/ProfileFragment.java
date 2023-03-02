@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.solobeast.R;
@@ -27,16 +28,21 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileFragment extends Fragment {
     Bitmap imageBitmap;
     CircleImageView circleImageView;
+    String userEmail;
+    TextView userEmailTv;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         init(view);
-        getImageFromFireBase();
+
     }
 
     private void init(View view){
         circleImageView = view.findViewById(R.id.profile_circle_image);
+        getImageFromFireBase();
+        userEmail = getEmail();
+        userEmailTv = view.findViewById(R.id.task_name_et);
+        userEmailTv.setText(userEmail);
     }
 
     @Override
@@ -55,5 +61,8 @@ public class ProfileFragment extends Fragment {
                 circleImageView.setImageBitmap(imageBitmap);
             Toast.makeText(getContext(), "success", Toast.LENGTH_LONG).show();
         }).addOnFailureListener(exception -> Toast.makeText(getContext(), "fail", Toast.LENGTH_LONG).show());
+    }
+    public String getEmail(){
+        return FirebaseAuth.getInstance().getCurrentUser().getEmail();
     }
 }
