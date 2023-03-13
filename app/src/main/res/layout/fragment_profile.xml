@@ -16,7 +16,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/card_view"
             android:layout_width="match_parent"
-            android:layout_height="450dp"
+            android:layout_height="550dp"
             android:layout_marginVertical="60dp"
             app:cardCornerRadius="15dp"
 
@@ -61,7 +61,7 @@
                     android:fontFamily="@font/bungee"
                     android:layout_gravity="center"/>
                 <TextView
-                    android:id="@+id/task_name1"
+                    android:id="@+id/textview_email_profile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -89,8 +89,36 @@
 
 
                 </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    android:id="@+id/textview_phone_profile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="@font/bungee"
+                    android:text="Phone" />
 
 
+                <com.google.android.material.textfield.TextInputLayout
+
+                    android:id="@+id/textInputLayout1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:clickable="false"
+                    app:startIconDrawable="@drawable/baseline_phone"
+                    android:hint="Phone">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/phone_textview_profile_from_fb"
+                        android:layout_width="304dp"
+                        android:layout_height="55dp"
+                        android:layout_gravity="center"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        tools:ignore="SpeakableTextPresentCheck" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
 <!--                <TextView-->
 <!--                    android:layout_marginTop="10dp"-->
 <!--                    android:id="@+id/task_desc_1"-->
