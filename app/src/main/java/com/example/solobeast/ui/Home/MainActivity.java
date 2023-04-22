@@ -5,59 +5,82 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.appcompat.widget.TooltipCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.solobeast.Extras.Receivers.AirplaneModeReceiver;
+import com.example.solobeast.Objects.User;
+import com.example.solobeast.ui.DetailedRewardAct;
 import com.example.solobeast.ui.DetailedTaskAct;
 import com.example.solobeast.ui.Home.Fragments.HomeFragment;
-import com.example.solobeast.Objects.Task;
 import com.example.solobeast.ui.Home.Fragments.ProfileFragment;
 import com.example.solobeast.R;
 import com.example.solobeast.ui.Home.Fragments.RewardFragment;
 import com.example.solobeast.databinding.ActivityMainBinding;
 import com.example.solobeast.ui.Auth.LoginAct;
 import com.example.solobeast.ui.MailContactAct;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.List;
-
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FirebaseCallback {
     ActivityMainBinding binding;
+    AirplaneModeReceiver airplaneModeReceiver;
+    public static User current_user;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     FloatingActionButton addBtn;
     FirebaseAuth mAuth;
+    public TextView xpDisplayTv;
 
+    @Override
+    public void onUserDetailsReceived() {
+        xpDisplayTv.setText("XP "+ current_user.getCurrentXP());
+    }
+
+    enum Fragments{
+        HOME,
+        REWARDS,
+        PROFILE
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        replaceFragment(new HomeFragment());
-        binding.bottomNavigationView.setSelectedItemId(R.id.homescreen);
-        binding.bottomNavigationView.setBackground(null);
-        addBtn = (FloatingActionButton) binding.addButtonFab.findViewById(R.id.add_button_fab);
+        current_user = new User();
+        getUserDetails(this);
+        init();
 
-        addBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        airplaneModeReceiver = new AirplaneModeReceiver();
+//        if(AirplaneModeReceiver.isAirplaneMode){
+//
+//        }
+        addBtn.setOnClickListener(view -> {
+            //Fragment f = this.getFragmentManager().findFragmentById();
+            if(determineFragment() == Fragments.HOME){
                 Intent i = new Intent(getApplicationContext(), DetailedTaskAct.class);
+                i.putExtra("from_intent","Add");
+                startActivity(i);
+            }
+            if(determineFragment() == Fragments.REWARDS){
+                Intent i = new Intent(getApplicationContext(), DetailedRewardAct.class);
                 i.putExtra("from_intent","Add");
                 startActivity(i);
             }
@@ -68,27 +91,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.homescreen:
-                    replaceFragment(new HomeFragment());
+                    //finish();
+                    replaceFragment(new HomeFragment(),Fragments.HOME);
                     break;
                 case R.id.profile:
-                    replaceFragment(new ProfileFragment());
+                    //finish();
+                    replaceFragment(new ProfileFragment(),Fragments.PROFILE);
                     break;
                 case R.id.reward:
-                    replaceFragment(new RewardFragment());
+                    //finish();
+                    replaceFragment(new RewardFragment(),Fragments.REWARDS);
                     break;
             }
             return true;
         });
-
-
-        init();
         navdrawer_init();
-
-
-
     }
     private void init(){
-       //DisplayUsername= findViewById(R.id.display_tv);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        replaceFragment(new HomeFragment(),Fragments.HOME);
+        binding.bottomNavigationView.setSelectedItemId(R.id.homescreen);
+        binding.bottomNavigationView.setBackground(null);
+        addBtn = (FloatingActionButton) binding.addButtonFab.findViewById(R.id.add_button_fab);
+        xpDisplayTv = findViewById(R.id.xp_main_display);
+        xpDisplayTv.setText("XP");
     }
 
     private void navdrawer_init(){
@@ -144,6 +171,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
+
     public void sign_out() {
         mAuth.signOut();
     }
@@ -158,10 +186,87 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(new Intent(this,LoginAct.class));
         }
     }
-    private void replaceFragment(Fragment fragment) {
+    private void replaceFragment(Fragment fragment, Fragments a) {
+        String onWhichFragment = "";
+        int theFrag = a.ordinal();
+        switch (theFrag){
+            case 0:
+                onWhichFragment = "HOME";
+                break;
+            case 1:
+                onWhichFragment = "REWARDS";
+                break;
+            case 2:
+                onWhichFragment = "PROFILE";
+                break;
+        }
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout, fragment);
+        fragmentTransaction.replace(R.id.frame_layout, fragment,onWhichFragment);
         fragmentTransaction.commit();
+    }
+
+    public Fragments determineFragment(){
+        Fragment rewardsFrag = (Fragment)getSupportFragmentManager().findFragmentByTag("REWARDS");
+        Fragment profileFrag = (Fragment)getSupportFragmentManager().findFragmentByTag("PROFILE");
+        if(rewardsFrag != null && rewardsFrag.isVisible()){
+            return Fragments.REWARDS;
+        }
+        else if(profileFrag != null && profileFrag.isVisible()){
+            return Fragments.PROFILE;
+        }
+        return Fragments.HOME;
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(airplaneModeReceiver, new IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED));
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(airplaneModeReceiver);
+
+    }
+
+    public static void getUserDetails(FirebaseCallback callback){
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getUid());
+        Task<DataSnapshot> task = ref.get();
+        task.addOnSuccessListener(dataSnapshot -> {
+            User user_fb = dataSnapshot.getValue(User.class);
+            current_user.setCurrentXP(user_fb.getCurrentXP());
+            current_user.setPhoneNumber(user_fb.getPhoneNumber());
+            Log.d("AuthData","got all user details" + current_user.getCurrentXP());
+            callback.onUserDetailsReceived();
+        }).addOnFailureListener(e -> {
+            // Handle any errors here
+            Log.d("AuthData","The opreation is not good\nCause: \n" +e);
+        });
+    }
+    /**
+     * Updates the current XP value of the current user in Firebase database.
+     *
+     * @param xpToOperate the amount of XP to add or subtract from the current XP value.
+     * @param operation the operation to perform on the current XP value: "IncreaseVal" to add XP or any other string to subtract XP.
+     */
+    public static void updateXPtoUserFirebase(int xpToOperate, String operation) {
+        //set value in firebase
+
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getUid()).child("currentXP");
+
+        int current = MainActivity.current_user.getCurrentXP();
+        int CurrentValue;
+        if(operation.equals("IncreaseVal")){
+            CurrentValue = current + xpToOperate;
+        }
+        else {
+            CurrentValue = current - xpToOperate;
+        }
+
+        ref.setValue(CurrentValue);
+        MainActivity.current_user.setCurrentXP(CurrentValue);
     }
 }

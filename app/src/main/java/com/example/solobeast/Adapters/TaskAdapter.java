@@ -3,7 +3,6 @@ import com.example.solobeast.Objects.Task;
 import com.example.solobeast.R;
 import com.example.solobeast.ui.TaskTimerAct;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.ValueEventListener;
 
 import android.content.Context;
 import android.content.Intent;
@@ -41,9 +40,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         //set holder items to UI;
         //holder."text".setText();
         //...whatever
-        holder.taskNameTv.setText("TaskName: "+ task.getName());
-        holder.difficultyTv.setText("Difficulty: "+task.getDifficulty());
-        holder.timeTv.setText("Time: "+ task.getTime());
+        holder.taskNameTv.setText("TaskName:\n\n"+ task.getName());
+        holder.difficultyTv.setText("Difficulty:\n\n"+task.getDifficulty());
+        holder.timeTv.setText("Time:\n\n"+ task.getTime());
     }
 
     @Override

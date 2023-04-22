@@ -42,19 +42,32 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:navigationIcon="@drawable/ic_baseline_menu"
-                        app:title="@string/app_name"
-                        />
+                        app:title="@string/app_name" />
 
-                    <ImageView
-                        android:id="@+id/imageView"
-                        android:layout_width="28dp"
-                        android:layout_height="25dp"
-                        android:layout_marginEnd="24dp"
-                        android:backgroundTint="#000000"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@+id/toolbar"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_baseline_search" />
+                    <!--                    <ImageView-->
+                    <!--                        android:id="@+id/imageView"-->
+                    <!--                        android:layout_width="28dp"-->
+                    <!--                        android:layout_height="25dp"-->
+                    <!--                        android:layout_marginEnd="24dp"-->
+                    <!--                        android:backgroundTint="#000000"-->
+                    <!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--                        app:layout_constraintEnd_toEndOf="@+id/toolbar"-->
+                    <!--                        app:layout_constraintTop_toTopOf="parent"-->
+                    <!--                        app:srcCompat="@drawable/ic_baseline_search" />-->
+                    <TextView
+                        android:id="@+id/xp_main_display"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="80dp"
+                        android:drawableLeft="@drawable/baseline_diamond_24"
+                        android:drawableRight="@drawable/baseline_diamond_24"
+                        android:fontFamily="@font/bungee"
+                        android:text="XP"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

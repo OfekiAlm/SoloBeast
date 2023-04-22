@@ -89,5 +89,5 @@ public class ProfileFragment extends Fragment {
             Log.d("AuthData","The opreation is not good\nCause: \n" +e);
         });
 
-}
+    }
 }

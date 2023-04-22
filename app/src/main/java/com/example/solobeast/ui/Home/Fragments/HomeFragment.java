@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.solobeast.Adapters.RecyclerViewFunctionalities;
+import com.example.solobeast.Adapters.RewardAdapter;
 import com.example.solobeast.Adapters.TaskAdapter;
 import com.example.solobeast.Objects.Task;
 import com.example.solobeast.R;
@@ -73,16 +74,6 @@ public class HomeFragment extends Fragment implements RecyclerViewFunctionalitie
 
             }
         });
-    }
-
-    public void addTaskToList(Task t){
-        tasksList.add(t);
-        adapter.notifyItemInserted(tasksList.size() - 1);
-        //recyclerView.scrollToPosition(tasksList.size() - 1);
-    }
-    public void updateTaskToList(int position,Task t){
-        tasksList.set(position, t);
-        adapter.notifyItemChanged(position);
     }
 
     @Override

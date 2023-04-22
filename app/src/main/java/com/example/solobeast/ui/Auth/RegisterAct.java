@@ -41,7 +41,7 @@ import java.io.IOException;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RegisterAct extends AppCompatActivity {
-    TextInputEditText editTextEmail, editTextpassword;
+    TextInputEditText editTextEmail, editTextpassword, editTextPhoneNum;
     private String TAG = "AuthData";
     private FirebaseAuth mAuth;
     ActivityResultLauncher<Intent> activityResultLauncher;
@@ -87,7 +87,7 @@ public class RegisterAct extends AppCompatActivity {
         editTextpassword = findViewById(R.id.editTextTextPassword_Register);
         circleImageView = findViewById(R.id.profile_image);
         takePicBtn = findViewById(R.id.profile_pic_fab);
-
+        editTextPhoneNum = findViewById(R.id.editTextTextPhoneNum_Register);
 
         TextView moveToLogin = findViewById(R.id.move_screen);
         alertDialog = new AlertDialog.Builder(this);
@@ -107,12 +107,13 @@ public class RegisterAct extends AppCompatActivity {
         return true;
     }
     private void RegisterOnResult_and_takePicFromCamera(){
+
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
+                    Bitmap bitmapConvertable;
                     System.out.println(result);
                     System.out.println(result.getData());
                     if(result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        Bitmap bitmapConvertable;
                         Intent bitmap = result.getData();
                         Uri uri = bitmap.getData();
                         try {
@@ -129,8 +130,9 @@ public class RegisterAct extends AppCompatActivity {
                 });
     }
     public void register(View view) {
+        String userPhone = editTextPhoneNum.getText().toString();
         User my_user = new User(
-            "ddd"
+            userPhone
         );
         String userEmail = editTextEmail.getText().toString();
         String userPassword = editTextpassword.getText().toString();

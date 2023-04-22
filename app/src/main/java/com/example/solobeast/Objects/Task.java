@@ -18,10 +18,10 @@ public class Task {
         //DEFAULT FOR FIREBASE.\\
     }
     public Task(String name,String time,String description,String difficulty,String key) {
-        if(timeIsValid(time)){ this.time = time;}
-        if(nameIsValid(name)){ this.name = name;}
-        if(descIsValid(description)){this.description = description;}
-        if(diffIsValid(difficulty)){this.difficulty = difficulty;}
+        if(timeIsValid(time)){ this.time = time;}else{this.time = "01:00";}
+        if(nameIsValid(name)){ this.name = name;}else{this.name = "Default name";}
+        if(descIsValid(description)){this.description = description;}else{this.description = "Default description because none was provided";}
+        if(diffIsValid(difficulty)){this.difficulty = difficulty;}else {this.difficulty = "EASY";}
         this.key = key;
     }
 
@@ -32,7 +32,7 @@ public class Task {
     }
 
     private boolean descIsValid(String description) {
-        //if(description.isEmpty()) return false;
+        if(description.isEmpty()) return false;
         return true;
     }
 
@@ -42,7 +42,7 @@ public class Task {
     }
 
     private boolean timeIsValid(String time) {
-        //HH:MM\\
+        if(time.isEmpty()) return false;
         return true;
     }
     ///\\\
