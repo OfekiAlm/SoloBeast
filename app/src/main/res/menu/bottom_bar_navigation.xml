@@ -9,7 +9,7 @@
     <item
         android:id="@+id/reward"
         android:icon="@drawable/ic_baseline_contact_mail"
-        android:title="Reward"
+        android:title="Rewards"
         android:contentDescription="rewards activity"
 
         />

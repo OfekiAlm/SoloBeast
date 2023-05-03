@@ -40,9 +40,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         //set holder items to UI;
         //holder."text".setText();
         //...whatever
-        holder.taskNameTv.setText("TaskName:\n\n"+ task.getName());
-        holder.difficultyTv.setText("Difficulty:\n\n"+task.getDifficulty());
-        holder.timeTv.setText("Time:\n\n"+ task.getTime());
+        holder.taskNameTv.setText(/*"TaskName:\n\n"+*/ task.getName());
+        holder.difficultyTv.setText(/*"Difficulty:\n\n"+*/task.getDifficulty());
+        holder.timeTv.setText(/*"Time:\n\n"+*/ task.getTime());
     }
 
     @Override

@@ -32,6 +32,7 @@ import com.example.solobeast.ui.Home.Fragments.RewardFragment;
 import com.example.solobeast.databinding.ActivityMainBinding;
 import com.example.solobeast.ui.Auth.LoginAct;
 import com.example.solobeast.ui.MailContactAct;
+import com.example.solobeast.ui.SettingsAct;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onUserDetailsReceived() {
-        xpDisplayTv.setText("XP "+ current_user.getCurrentXP());
+        xpDisplayTv.setText(""+ current_user.getCurrentXP());
     }
 
     enum Fragments{
@@ -148,6 +149,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch(item.getItemId()){
             case R.id.nav_settings:
                 Log.i("MoveScreen", "MoveToSettingsScreen:Success");
+                Intent moveToSettings = new Intent(this, SettingsAct.class);
+                startActivity(moveToSettings);
                 break;
             case R.id.nav_onboarding:
                 Log.i("MoveScreen", "MoveToOnBoardScreen:Success");

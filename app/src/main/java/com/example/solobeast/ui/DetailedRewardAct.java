@@ -3,8 +3,11 @@ package com.example.solobeast.ui;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.solobeast.Extras.PickerDialog;
 import com.example.solobeast.Objects.Reward;
 import com.example.solobeast.Objects.Task;
 import com.example.solobeast.R;
@@ -35,6 +38,13 @@ public class DetailedRewardAct extends AppCompatActivity {
         reward = new Reward();
         determineEditOrAdd(fromActivity);
 
+
+        rewardXpTv.setOnFocusChangeListener((view, hasFocus) -> {
+            if(hasFocus)
+                popXpSelection(view);
+
+
+        });
         submitFloatingFormBtn.setOnClickListener(view -> {
             counter++;
             if(counter == 1){
@@ -44,15 +54,42 @@ public class DetailedRewardAct extends AppCompatActivity {
             else if(counter >= 2){
                 if(userChoice.equals("AddReward")){
                     addRewardToFirebase();
+                    finish();
                 }
                 else{
                     updateRewardToFirebase();
+                    finish();
                 }
             }
         });
     }
 
+    private void popXpSelection(View view){
+        // Instantiate the PickerDialog
+        PickerDialog pickerDialog = new PickerDialog(this, "numbers");
 
+        // Set a listener to be notified when a name is selected
+        pickerDialog.setOnNameSelectedListener(new PickerDialog.OnPickerSelectedListener() {
+            @Override
+            public void onNameSelected(String name) {
+                // Display the selected name
+
+            }
+
+            @Override
+            public void onNumberSelected(int num) {
+                rewardXpTv.setText(String.valueOf(num));
+            }
+        });
+
+// Show the dialog
+        pickerDialog.show();
+
+
+
+
+
+    }
     private void init(){
         if(getIntent() != null){
             fromActivity = getIntent().getStringExtra("from_intent");

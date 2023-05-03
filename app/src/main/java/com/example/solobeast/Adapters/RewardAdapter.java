@@ -104,8 +104,15 @@ public class RewardAdapter extends RecyclerView.Adapter<RewardAdapter.RewardView
 
             alertDialog.setPositiveButton("Yes", (dialogInterface, i) -> {
                 dialogInterface.cancel();
-                Toast.makeText(context,"You just bought the reward. Congrats!",Toast.LENGTH_LONG).show();
-                MainActivity.updateXPtoUserFirebase(r.getXP(),"DecreaseVal");
+                if (r.getXP() <= MainActivity.current_user.getCurrentXP()){
+                    Toast.makeText(context,"You just bought the reward. Congrats!",Toast.LENGTH_LONG).show();
+                    MainActivity.updateXPtoUserFirebase(r.getXP(),"DecreaseVal");
+                }
+                else {
+                    Toast.makeText(context,"You don't have enough xp. 😢",Toast.LENGTH_LONG).show();
+
+                }
+
 
                 if (context instanceof Activity) {
                     ((Activity) context).finish();

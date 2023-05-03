@@ -2,23 +2,30 @@ package com.example.solobeast.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
+import com.example.solobeast.Extras.PickerDialog;
 import com.example.solobeast.Objects.Task;
 import com.example.solobeast.R;
 import com.example.solobeast.ui.Home.MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import com.example.solobeast.ui.Home.Fragments.HomeFragment;
 
+import java.util.Locale;
+
 public class DetailedTaskAct extends AppCompatActivity {
-    TextView taskNameTv,taskDescTv,taskDiffTv,taskTimeTv;
+    TextInputEditText taskNameTv,taskDescTv,taskDiffTv,taskTimeTv;
     Task task;
     String taskName, taskTime, taskDesc, taskDiff;
     FloatingActionButton submitFormBtn;
@@ -40,7 +47,17 @@ public class DetailedTaskAct extends AppCompatActivity {
         determineEditOrAdd(fromActivity);
         changeBackgroundColorAsTaskDiff();
 
+        taskTimeTv.setOnFocusChangeListener((view, hasFocus) -> {
+            if(hasFocus)
+                popTimePicker(view);
 
+        });
+
+        taskDiffTv.setOnFocusChangeListener((view, hasFocus) -> {
+            if (hasFocus)
+                popDiffSelection(view);
+
+        });
         submitFormBtn.setOnClickListener(view -> {
            counter++;
            if(counter == 1){
@@ -50,16 +67,48 @@ public class DetailedTaskAct extends AppCompatActivity {
            else if(counter >= 2){
                if(userChoice.equals("AddTask")){
                    addTaskToFirebase();
+                   finish();
                }
                else{
                    updateTaskToFirebase();
+                   finish();
                }
 //                Intent i = new Intent(this, MainActivity.class);
 //                startActivity(i);
            }
         });
     }
+    public void popTimePicker(View view)
+    {
+        TimePickerDialog.OnTimeSetListener onTimeSetListener = (timePicker, selectedHour, selectedMinute) -> taskTimeTv.setText(String.format(Locale.getDefault(), "%02d:%02d",selectedHour, selectedMinute));
 
+        // int style = AlertDialog.THEME_HOLO_DARK;
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, /*style,*/ onTimeSetListener, 1,0, true);
+
+        timePickerDialog.setTitle("Select Time");
+        timePickerDialog.show();
+    }
+
+    public void popDiffSelection(View view){
+        // Instantiate the PickerDialog
+        PickerDialog pickerDialog = new PickerDialog(this, "diff");
+
+        pickerDialog.setOnNameSelectedListener(new PickerDialog.OnPickerSelectedListener() {
+            @Override
+            public void onNameSelected(String name) {
+                // Display the selected nam
+                taskDiffTv.setText(name);
+                }
+
+            @Override
+            public void onNumberSelected(int num) {
+                // This method is not used in this example
+            }
+        });
+
+        pickerDialog.show();
+    }
 
     private void init(){
         if(getIntent() != null){
