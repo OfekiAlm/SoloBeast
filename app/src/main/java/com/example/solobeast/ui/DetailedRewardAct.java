@@ -81,11 +81,7 @@ public class DetailedRewardAct extends AppCompatActivity {
 
             @Override
             public void onNumberSelected(int num) {
-                if (!String.valueOf(num).equals(""))
-                    rewardXpTv.setText(String.valueOf(num));
-                else{
-                    rewardDescTv.requestFocus();
-                }
+                rewardXpTv.setText(String.valueOf(num));
             }
         });
 
