@@ -70,7 +70,7 @@ public class ProfileFragment extends Fragment {
             imageBitmap  = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
             if(imageBitmap !=null)
                 circleImageView.setImageBitmap(imageBitmap);
-            Toast.makeText(getContext(), "success", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getActivity(), "successfully loaded your profile credentials", Toast.LENGTH_LONG).show();
         }).addOnFailureListener(exception -> Toast.makeText(getContext(), "fail", Toast.LENGTH_LONG).show());
     }
     public String getEmail(){

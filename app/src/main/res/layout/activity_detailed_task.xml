@@ -11,7 +11,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="match_parent"
-        android:layout_height="630dp"
+        android:layout_height="700dp"
         android:layout_marginVertical="60dp"
         app:cardCornerRadius="15dp"
 
@@ -30,12 +30,30 @@
                 android:text="Task Info"
                 android:fontFamily="@font/bungee"
                 android:layout_gravity="center"/>
+            <LinearLayout
+                android:id="@+id/or_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                >
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:background="?android:attr/listDivider"
+                    android:backgroundTint="#FFFFFF" />
+
+            </LinearLayout>
             <TextView
                 android:id="@+id/task_name1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
                 android:fontFamily="@font/bungee"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
                 android:text="Name" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -45,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:clickable="false"
-                android:hint="Name">
+                android:hint="Enter task name">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/task_name_et"
@@ -65,7 +83,7 @@
                 android:id="@+id/task_desc_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_gravity="center"
                 android:fontFamily="@font/bungee"
                 android:text="Description" />
 
@@ -77,12 +95,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:clickable="false"
-                android:hint="Description">
+                android:hint="Enter task description">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/task_desc_et"
                     android:layout_width="304dp"
-                    android:layout_height="55dp"
+                    android:layout_height="75dp"
                     android:layout_gravity="center"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
@@ -96,9 +114,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
+                android:layout_gravity="center"
                 android:fontFamily="@font/bungee"
-                android:text="Time" />
+                android:text="Duration" />
 
             <com.google.android.material.textfield.TextInputLayout
 
@@ -107,7 +125,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:clickable="false"
-                android:hint="Time">
+                android:hint="Click to choose task duration">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/task_time_et"
@@ -128,7 +146,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
+                android:layout_gravity="center"
                 android:fontFamily="@font/bungee"
                 android:text="Difficulty" />
 
@@ -139,7 +157,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:clickable="false"
-                android:hint="Difficulty">
+                android:hint="Choose your task difficulty">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/task_diff_et"
@@ -161,7 +179,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
-
+            android:backgroundTint="@color/white"
             app:srcCompat="@drawable/ic_baseline_edit"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />

@@ -47,9 +47,9 @@ public class RewardAdapter extends RecyclerView.Adapter<RewardAdapter.RewardView
 //        set holder items to UI;
 //        holder."text".setText();
 //        ...whatever
-        holder.RewardNameTv.setText("RewardName: "+ r.getRewardName());
-        holder.RewardDescTv.setText("RewardDescription: "+ r.getDescription());
-        holder.xpTv.setText("xp: "+ r.getXP());
+        holder.RewardNameTv.setText(r.getRewardName());
+        holder.RewardDescTv.setText(r.getDescription());
+        holder.xpTv.setText("XP points "+ r.getXP());
     }
 
     @Override

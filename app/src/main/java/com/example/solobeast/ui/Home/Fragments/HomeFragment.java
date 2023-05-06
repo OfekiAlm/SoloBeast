@@ -1,10 +1,12 @@
 package com.example.solobeast.ui.Home.Fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.solobeast.Adapters.RecyclerViewFunctionalities;
 import com.example.solobeast.Adapters.RewardAdapter;
@@ -20,6 +23,8 @@ import com.example.solobeast.Adapters.TaskAdapter;
 import com.example.solobeast.Objects.Task;
 import com.example.solobeast.R;
 import com.example.solobeast.ui.DetailedTaskAct;
+import com.example.solobeast.ui.Home.MainActivity;
+import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -113,15 +118,32 @@ public class HomeFragment extends Fragment implements RecyclerViewFunctionalitie
 
     @Override
     public boolean onItemLongClick(int position) {
+        AlertDialog.Builder alertDialog;
+        alertDialog = new AlertDialog.Builder(getContext());
 
-        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference(
-                "Users/"
-                        + FirebaseAuth.getInstance().getCurrentUser().getUid()
-                        +"/Tasks"
-        );
-        myRef = myRef.child(tasksList.get(position).getKey());
-        myRef.removeValue();
-        adapter.notifyItemRemoved(position);
+        alertDialog
+                .setMessage("Are you sure you want to delete this task?")
+                .setTitle("Delete Task");
+
+        alertDialog.setPositiveButton("Yes", (dialogInterface, i) -> {
+            dialogInterface.cancel();
+
+            DatabaseReference myRef = FirebaseDatabase.getInstance().getReference(
+                    "Users/"
+                            + FirebaseAuth.getInstance().getCurrentUser().getUid()
+                            +"/Tasks"
+            );
+            myRef = myRef.child(tasksList.get(position).getKey());
+            myRef.removeValue();
+            adapter.notifyItemRemoved(position);
+
+        });
+        alertDialog.setNegativeButton("Cancel", (dialogInterface, i) -> {
+            dialogInterface.cancel();
+            Toast.makeText(getContext(),"Event was cancelled successfully",Toast.LENGTH_LONG).show();
+        });
+        AlertDialog alert = alertDialog.create();
+        alert.show();
         return true;
         //REMOVE FROM DB.
     }

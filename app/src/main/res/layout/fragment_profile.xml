@@ -150,15 +150,15 @@
 
 <!--                </com.google.android.material.textfield.TextInputLayout>-->
             </LinearLayout>
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_edit_add_task"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center"
+<!--            <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--                android:id="@+id/fab_edit_add_task"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="bottom|center"-->
 
-                app:srcCompat="@drawable/ic_baseline_edit"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+<!--                app:srcCompat="@drawable/ic_baseline_edit"-->
+<!--                android:layout_alignParentRight="true"-->
+<!--                android:layout_alignParentEnd="true" />-->
         </androidx.cardview.widget.CardView>
 
 

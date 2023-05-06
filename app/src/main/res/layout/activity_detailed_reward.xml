@@ -30,11 +30,28 @@
                 android:text="Reward Info"
                 android:fontFamily="@font/bungee"
                 android:layout_gravity="center"/>
+            <LinearLayout
+                android:id="@+id/or_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                >
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:background="?android:attr/listDivider"
+                    android:backgroundTint="#FFFFFF" />
+
+            </LinearLayout>
             <TextView
                 android:id="@+id/reward_name1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_gravity="center"
                 android:fontFamily="@font/bungee"
                 android:text="Name" />
 
@@ -45,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:clickable="false"
-                android:hint="Name">
+                android:hint="Enter reward name">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/reward_name_et"
@@ -65,7 +82,7 @@
                 android:id="@+id/reward_desc_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_gravity="center"
                 android:fontFamily="@font/bungee"
                 android:text="Description" />
 
@@ -77,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:clickable="false"
-                android:hint="Description">
+                android:hint="Enter rewar description">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/reward_desc_et"
@@ -96,7 +113,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
+                android:layout_gravity="center"
                 android:fontFamily="@font/bungee"
                 android:text="XP" />
 
@@ -107,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:clickable="false"
-                android:hint="XP">
+                android:hint="Choose your xp reward">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/reward_et_xp1"
@@ -129,6 +146,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             app:srcCompat="@drawable/ic_baseline_edit"
+            android:backgroundTint="@color/white"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
     </androidx.cardview.widget.CardView>

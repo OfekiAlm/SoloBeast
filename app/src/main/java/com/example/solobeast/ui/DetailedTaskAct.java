@@ -3,24 +3,20 @@ package com.example.solobeast.ui;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.TimePickerDialog;
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.TimePicker;
-import android.widget.Toast;
 
+import com.example.solobeast.Extras.GuiderDialog;
 import com.example.solobeast.Extras.PickerDialog;
 import com.example.solobeast.Objects.Task;
 import com.example.solobeast.R;
-import com.example.solobeast.ui.Home.MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import com.example.solobeast.ui.Home.Fragments.HomeFragment;
 
 import java.util.Locale;
 
@@ -46,7 +42,8 @@ public class DetailedTaskAct extends AppCompatActivity {
         task = new Task();
         determineEditOrAdd(fromActivity);
         changeBackgroundColorAsTaskDiff();
-
+        GuiderDialog gd = new GuiderDialog(this,"DetailedTaskAct", "lol haha nice");
+        gd.startDialog();
         taskTimeTv.setOnFocusChangeListener((view, hasFocus) -> {
             if(hasFocus)
                 popTimePicker(view);
@@ -81,12 +78,11 @@ public class DetailedTaskAct extends AppCompatActivity {
     public void popTimePicker(View view)
     {
         TimePickerDialog.OnTimeSetListener onTimeSetListener = (timePicker, selectedHour, selectedMinute) -> taskTimeTv.setText(String.format(Locale.getDefault(), "%02d:%02d",selectedHour, selectedMinute));
-
-        // int style = AlertDialog.THEME_HOLO_DARK;
+        TimePickerDialog.OnCancelListener onCancelListener = (timePicker)  -> taskDescTv.requestFocus();// int style = AlertDialog.THEME_HOLO_DARK;
 
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, /*style,*/ onTimeSetListener, 1,0, true);
-
-        timePickerDialog.setTitle("Select Time");
+        timePickerDialog.setOnCancelListener(onCancelListener);
+        timePickerDialog.setTitle("Select Task Duration (HH:MM)");
         timePickerDialog.show();
     }
 

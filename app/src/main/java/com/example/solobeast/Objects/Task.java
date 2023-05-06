@@ -24,69 +24,85 @@ public class Task {
         if(diffIsValid(difficulty)){this.difficulty = difficulty;}else {this.difficulty = "EASY";}
         this.key = key;
     }
-
     private boolean diffIsValid(String difficulty) {
         if(difficulty.equals("EASY") || difficulty.equals("MEDIUM") || difficulty.equals("HARD"))
             return true;
         return false;
     }
-
     private boolean descIsValid(String description) {
         if(description.isEmpty()) return false;
         return true;
     }
-
     private boolean nameIsValid(String name) {
         if(name.isEmpty()) return false;
         return true;
     }
-
     private boolean timeIsValid(String time) {
         if(time.isEmpty()) return false;
         return true;
     }
-    ///\\\
+    public static String changeColorAsTaskDifficulty(String diff){
+        String greenHex = "#0eeb0e";
+        String orangeHex = "#eba10e";
+        String redHex = "#db200b";
 
-    public static String timeRepresentation(String time){
-        List<String> arrayList = Arrays.asList(time.split(":"));
-        String hours = arrayList.get(0);
-        String minutes = arrayList.get(1);
-        if(hours.equals("00")){ return minutes + " minutes";}
-        else if(hours.startsWith("0")){
-
-
-            return Arrays.asList(hours.split("0")).get(1) + " hours";
+        switch (diff){
+            case "EASY":
+                return greenHex;
+            case "MEDIUM":
+                return orangeHex;
+            case "HARD":
+                return redHex;
         }
-        else if(minutes.equals("00")){ return hours + " hours";}
-        return hours+" hours" + " and " + minutes + " minutes";
+        return "";
     }
+    public static String timeRepresentation(String hourAndMinute) {
+        String[] parts = hourAndMinute.split(":");
+        int hours = Integer.parseInt(parts[0]);
+        int minutes = Integer.parseInt(parts[1]);
 
+        String hourString = hours == 1 ? "hour" : "hours";
+        String minuteString = minutes == 1 ? "minute" : "minutes";
+
+        if (hours == 0 && minutes == 1) {
+            return "1 minute";
+        } else if (hours == 0) {
+            return minutes + " " + minuteString;
+        } else if (minutes == 0) {
+            return hours + " " + hourString;
+        } else {
+            return hours + " " + hourString + " and " + minutes + " " + minuteString;
+        }
+    }
     public String getName() {
         return this.name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public void setTime(String time) {
         this.time = time;
     }
-
     public String getTime() {
         return this.time;
     }
-
     public String getDifficulty() {
         return this.difficulty;
     }
-
     public String getDescription() {
         return this.description;
     }
-
     public String getKey() {
         return this.key;
+    }
+    public void setDesc(String description) {
+        this.description = description;
+    }
+    public void setDiff(String diff) {
+        this.difficulty = diff;
+    }
+    public void setKey(String key) {
+        this.key = key;
     }
     @Override
     public String toString() {
@@ -96,17 +112,5 @@ public class Task {
                 ", description='" + this.description + '\'' +
                 ", difficulty='" + this.difficulty + '\'' +
                 '}';
-    }
-
-    public void setDesc(String description) {
-        this.description = description;
-    }
-
-    public void setDiff(String diff) {
-        this.difficulty = diff;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
     }
 }

@@ -2,8 +2,11 @@ package com.example.solobeast.Extras;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.widget.Button;
 import android.widget.NumberPicker;
+
+import androidx.annotation.Nullable;
 
 import com.example.solobeast.R;
 
@@ -62,6 +65,11 @@ public class PickerDialog extends Dialog {
      */
     public void setOnNameSelectedListener(OnPickerSelectedListener listener) {
         mListener = listener;
+    }
+
+    @Override
+    public void setOnCancelListener(@Nullable OnCancelListener listener) {
+        super.setOnCancelListener(listener);
     }
 
     /**

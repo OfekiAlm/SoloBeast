@@ -9,18 +9,21 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
-import androidx.appcompat.widget.TooltipCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-
+import com.example.solobeast.Extras.GuiderDialog;
 import com.example.solobeast.Extras.Receivers.AirplaneModeReceiver;
 import com.example.solobeast.Objects.User;
 import com.example.solobeast.ui.DetailedRewardAct;
@@ -32,7 +35,6 @@ import com.example.solobeast.ui.Home.Fragments.RewardFragment;
 import com.example.solobeast.databinding.ActivityMainBinding;
 import com.example.solobeast.ui.Auth.LoginAct;
 import com.example.solobeast.ui.MailContactAct;
-import com.example.solobeast.ui.SettingsAct;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -42,7 +44,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FirebaseCallback {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FirebaseCallback{
     ActivityMainBinding binding;
     AirplaneModeReceiver airplaneModeReceiver;
     public static User current_user;
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     FloatingActionButton addBtn;
     FirebaseAuth mAuth;
-    public TextView xpDisplayTv;
+    TextView xpDisplayTv;
 
     @Override
     public void onUserDetailsReceived() {
@@ -69,10 +71,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getUserDetails(this);
         init();
 
+        GuiderDialog guiderDialog = new GuiderDialog(this,"MainActivity","Hello there,\nYou're new here. Let me guide you through the pages if the app, What's behind me is the first and the main screen. You can add tasks at the plus button at the bottom of the screen and also navigate to another screens.");
+        guiderDialog.startDialog();
         airplaneModeReceiver = new AirplaneModeReceiver();
 //        if(AirplaneModeReceiver.isAirplaneMode){
 //
 //        }
+
         addBtn.setOnClickListener(view -> {
             //Fragment f = this.getFragmentManager().findFragmentById();
             if(determineFragment() == Fragments.HOME){
@@ -85,6 +90,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 i.putExtra("from_intent","Add");
                 startActivity(i);
             }
+            if (determineFragment() == Fragments.PROFILE){
+                Toast.makeText(this,"",Toast.LENGTH_LONG).show();
+            }
         });
 
         mAuth = FirebaseAuth.getInstance();
@@ -94,14 +102,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 case R.id.homescreen:
                     //finish();
                     replaceFragment(new HomeFragment(),Fragments.HOME);
+                    addBtn.setVisibility(View.VISIBLE);
                     break;
                 case R.id.profile:
                     //finish();
                     replaceFragment(new ProfileFragment(),Fragments.PROFILE);
+                    addBtn.setVisibility(View.GONE);
                     break;
                 case R.id.reward:
                     //finish();
                     replaceFragment(new RewardFragment(),Fragments.REWARDS);
+                    addBtn.setVisibility(View.VISIBLE);
                     break;
             }
             return true;
@@ -111,12 +122,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void init(){
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         replaceFragment(new HomeFragment(),Fragments.HOME);
         binding.bottomNavigationView.setSelectedItemId(R.id.homescreen);
         binding.bottomNavigationView.setBackground(null);
         addBtn = (FloatingActionButton) binding.addButtonFab.findViewById(R.id.add_button_fab);
         xpDisplayTv = findViewById(R.id.xp_main_display);
         xpDisplayTv.setText("XP");
+        binding.xpMainDisplay.setContentDescription("You have "+current_user.getCurrentXP()+" xp");
+        //xpDisplayTv.setOnLongClickListener(this);
     }
 
     private void navdrawer_init(){
@@ -149,11 +163,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch(item.getItemId()){
             case R.id.nav_settings:
                 Log.i("MoveScreen", "MoveToSettingsScreen:Success");
-                Intent moveToSettings = new Intent(this, SettingsAct.class);
-                startActivity(moveToSettings);
+                //Intent moveToSettings = new Intent(this, SettingsActivity.class);
+                //startActivity(moveToSettings);
+                Toast.makeText(this,"Default settings is enabled in the current version",Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_onboarding:
                 Log.i("MoveScreen", "MoveToOnBoardScreen:Success");
+                Toast.makeText(this, "Welcome! every new user gets instruction in every screen ", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_contact:
                 Log.i("MoveScreen", "MoveToContact  Screen:Success");
@@ -223,15 +239,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         registerReceiver(airplaneModeReceiver, new IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED));
     }
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         unregisterReceiver(airplaneModeReceiver);
-
     }
 
     public static void getUserDetails(FirebaseCallback callback){
@@ -256,8 +271,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     public static void updateXPtoUserFirebase(int xpToOperate, String operation) {
         //set value in firebase
-
-
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getUid()).child("currentXP");
 
         int current = MainActivity.current_user.getCurrentXP();

@@ -103,7 +103,8 @@
                 android:layout_marginEnd="20dp"
                 app:labelVisibilityMode="labeled"
                 android:background="@android:color/transparent"
-                app:menu="@menu/bottom_bar_navigation"/>
+                app:menu="@menu/bottom_bar_navigation"
+                android:contentDescription="this is the bottom bar"/>
         </com.google.android.material.bottomappbar.BottomAppBar>
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_button_fab"

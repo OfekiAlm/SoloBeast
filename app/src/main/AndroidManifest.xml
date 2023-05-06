@@ -3,11 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.solobeast">
 
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_SERVICE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
@@ -20,6 +17,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="31">
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_settings" />
         <activity
             android:name=".ui.DetailedRewardAct"
             android:exported="false" />
@@ -56,13 +57,7 @@
         <activity
             android:name=".ui.Home.MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.Design.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/Theme.Design.NoActionBar"></activity>
         <activity
             android:name=".ui.Auth.LoginAct"
             android:exported="true" />
@@ -72,10 +67,11 @@
 
         <service android:name=".Extras.Services.TimerService" />
 
-        <receiver android:name=".Extras.Receivers.AirplaneModeReceiver"
+        <receiver
+            android:name=".Extras.Receivers.AirplaneModeReceiver"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.AIRPLANE_MODE"/>
+                <action android:name="android.intent.action.AIRPLANE_MODE" />
             </intent-filter>
         </receiver>
     </application>

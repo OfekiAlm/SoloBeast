@@ -2,6 +2,7 @@ package com.example.solobeast.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -67,6 +68,8 @@ public class DetailedRewardAct extends AppCompatActivity {
     private void popXpSelection(View view){
         // Instantiate the PickerDialog
         PickerDialog pickerDialog = new PickerDialog(this, "numbers");
+        DialogInterface.OnCancelListener onCancelListener = (picker) -> rewardDescTv.requestFocus();
+        pickerDialog.setOnCancelListener(onCancelListener);
 
         // Set a listener to be notified when a name is selected
         pickerDialog.setOnNameSelectedListener(new PickerDialog.OnPickerSelectedListener() {
@@ -78,7 +81,11 @@ public class DetailedRewardAct extends AppCompatActivity {
 
             @Override
             public void onNumberSelected(int num) {
-                rewardXpTv.setText(String.valueOf(num));
+                if (!String.valueOf(num).equals(""))
+                    rewardXpTv.setText(String.valueOf(num));
+                else{
+                    rewardDescTv.requestFocus();
+                }
             }
         });
 

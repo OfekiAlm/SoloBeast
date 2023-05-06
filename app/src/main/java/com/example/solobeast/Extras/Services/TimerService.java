@@ -6,13 +6,17 @@ import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.solobeast.Extras.Services.CountdownThread;
+import com.example.solobeast.ui.Home.MainActivity;
 
 public class TimerService extends Service {
     CountdownThread timerThread;
@@ -32,8 +36,6 @@ public class TimerService extends Service {
             timerThread = new CountdownThread();
             timerThread.setTime(intent.getIntExtra("task_time",0));
             timerThread.start();
-
-
         }
         Log.i("Value","STARTED");
 
@@ -51,7 +53,8 @@ public class TimerService extends Service {
         super.onDestroy();
         Log.i("Value","FINIHED");
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
-            stopForeground(Service.STOP_FOREGROUND_REMOVE);
+            Intent stopServiceIntent = new Intent(this, MainActivity.class);
+            stopService(stopServiceIntent);
         }
         timerThread.stopTimer();
         timerThread = null;

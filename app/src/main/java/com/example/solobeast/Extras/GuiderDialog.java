@@ -3,6 +3,8 @@ package com.example.solobeast.Extras;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.solobeast.R;
 
@@ -22,27 +24,24 @@ public class GuiderDialog extends Dialog {
 
     private void init() {
         show();
-        setContentView(R.layout.custom_picker_dialog);
-        //TextView explanationTv = findViewById(R.id.text_explanation);
-        //explanationTv.setText(mExplanation);
-        //Button okBtn = findViewById(R.id.button_ok_guide);
+        setContentView(R.layout.custom_guider_dialog);
+        TextView explanationTv = findViewById(R.id.explanation_text);
+        explanationTv.setText(mExplanation);
+        Button okBtn = findViewById(R.id.proceed_guide_btn);
 
-        //okBtn.setOnClickListener(view ->
-         //       proceedOk(view));
+        okBtn.setOnClickListener(view ->
+                proceedOk(view));
     }
 
-    public void goshow() {
+    public void startDialog() {
         activityTracker = new ActivityGuideTracker(mContext);
-        activityTracker.setUnvisited(mActivityName);
         if (!activityTracker.isVisited(mActivityName)) {
             init();
-
+            activityTracker.setVisited(mActivityName);
         }
     }
     public void proceedOk(View view){
-        activityTracker.clearActivitesStatus();
         dismiss();
-
     }
 
 }

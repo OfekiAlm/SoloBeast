@@ -1,4 +1,6 @@
 package com.example.solobeast.Adapters;
+import static com.example.solobeast.Objects.Task.*;
+
 import com.example.solobeast.Objects.Task;
 import com.example.solobeast.R;
 import com.example.solobeast.ui.TaskTimerAct;
@@ -6,12 +8,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -41,8 +45,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         //holder."text".setText();
         //...whatever
         holder.taskNameTv.setText(/*"TaskName:\n\n"+*/ task.getName());
+        holder.taskNameTv.setContentDescription("Task name is " + task.getName());
         holder.difficultyTv.setText(/*"Difficulty:\n\n"+*/task.getDifficulty());
-        holder.timeTv.setText(/*"Time:\n\n"+*/ task.getTime());
+        holder.constraintLayout.setBackgroundColor(Color.parseColor(changeColorAsTaskDifficulty(task.getDifficulty())));
+        holder.timeTv.setText(/*"Time:\n\n"+*/ timeRepresentation(task.getTime()));
+        holder.timeTv.setContentDescription("Task time is " + task.getTime());
     }
 
     @Override
@@ -54,12 +61,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     class TaskViewHolder extends RecyclerView.ViewHolder{
         //SET FIELDS OF TASK UI to
         TextView taskNameTv, difficultyTv,timeTv;
+        ConstraintLayout constraintLayout;
         public TaskViewHolder(@NonNull View itemView, RecyclerViewFunctionalities recyclerViewFunctionalities) {
             super(itemView);
             //find all views by id in task_item layout.
             taskNameTv = itemView.findViewById(R.id.taskName);
             difficultyTv = itemView.findViewById(R.id.diff);
             timeTv = itemView.findViewById(R.id.time);
+            constraintLayout = itemView.findViewById(R.id.constraintLayout2);
+
 
             FloatingActionButton startTaskFAB = itemView.findViewById(R.id.fab_start_task);
             startTaskFAB.setOnClickListener(new View.OnClickListener() {
