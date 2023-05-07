@@ -20,25 +20,7 @@ public class SplashAct extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-//        Thread splashScreenStarter = new Thread() {
-//            public void run() {
-//                try {
-//                    int delay = 0;
-//                    while (delay < 100) { // 5 seconds
-//                        sleep(100);
-//                        delay = delay + 100;
-//                    }
-//                    startActivity(new Intent(SplashAct.this, LoginAct.class));
-//
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                } finally {
-//                    finish();
-//                }
-//            }
-//
-//        };
-//        splashScreenStarter.start();
+
         splashImage = findViewById(R.id.splash_image_imgv);
 
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.splash_rainbow);

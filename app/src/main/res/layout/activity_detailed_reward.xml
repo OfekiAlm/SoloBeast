@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:clickable="false"
-                android:hint="Enter rewar description">
+                android:hint="Enter reward description">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/reward_desc_et"

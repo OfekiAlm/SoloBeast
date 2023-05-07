@@ -91,12 +91,12 @@ public class TaskTimerAct extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startService(taskTimer);
         }
-        airplaneModeTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //applyAirplaneMode();
-            }
-        });
+//        airplaneModeTv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //applyAirplaneMode();
+//            }
+//        });
         timeTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -182,7 +182,7 @@ public class TaskTimerAct extends AppCompatActivity {
                 @Override
                 public void run() {
                     // This code will be executed when the timer reaches 5 minutes left
-                    sendNotificationToUser("YOU'RE ALMOST DONE!","5 minutes left.");
+                    sendNotificationToUser("YOU'RE ALMOST DONE!","30 minutes left.");
                     Log.d("Notifications","scheduled a notification for 30 min mark");
 
                 }
@@ -260,7 +260,7 @@ public class TaskTimerAct extends AppCompatActivity {
 
     private void init(){
         timeTV = findViewById(R.id.timer_tv);
-        airplaneModeTv = findViewById(R.id.airplane_mode_tv);
+        //airplaneModeTv = findViewById(R.id.airplane_mode_tv);
         clock = findViewById(R.id.text_view_timer);
         notificationCounter = 0;
         if(getIntent() != null){

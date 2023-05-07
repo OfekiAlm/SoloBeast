@@ -205,9 +205,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(new Intent(this,LoginAct.class));
         }
     }
-    private void replaceFragment(Fragment fragment, Fragments a) {
+    private void replaceFragment(Fragment theInstance, Fragments enumVersion) {
         String onWhichFragment = "";
-        int theFrag = a.ordinal();
+        int theFrag = enumVersion.ordinal();
         switch (theFrag){
             case 0:
                 onWhichFragment = "HOME";
@@ -221,7 +221,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout, fragment,onWhichFragment);
+        fragmentTransaction.replace(R.id.frame_layout, theInstance,onWhichFragment);
         fragmentTransaction.commit();
     }
 

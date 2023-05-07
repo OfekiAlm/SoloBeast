@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.solobeast.Extras.PickerDialog;
+import com.example.solobeast.Extras.onPickerSelectedListener;
 import com.example.solobeast.Objects.Reward;
 import com.example.solobeast.Objects.Task;
 import com.example.solobeast.R;
@@ -72,7 +73,7 @@ public class DetailedRewardAct extends AppCompatActivity {
         pickerDialog.setOnCancelListener(onCancelListener);
 
         // Set a listener to be notified when a name is selected
-        pickerDialog.setOnNameSelectedListener(new PickerDialog.OnPickerSelectedListener() {
+        pickerDialog.setOnNameSelectedListener(new onPickerSelectedListener() {
             @Override
             public void onNameSelected(String name) {
                 // Display the selected name
@@ -126,7 +127,13 @@ public class DetailedRewardAct extends AppCompatActivity {
         reward.setXP(getIntent().getIntExtra("selected_reward_xp",0));
         reward.setKey(getIntent().getStringExtra("selected_reward_key"));
     }
-    public int strToInt(String str){return Integer.parseInt(str);}
+    public int strToInt(String str){
+        if(!str.equals(""))
+            return Integer.parseInt(str);
+        else {
+            return 1;
+        }
+    }
     private void insertEditTextsValues() {
         rewardNameTv.setText(reward.getRewardName());
         rewardDescTv.setText(reward.getDescription());

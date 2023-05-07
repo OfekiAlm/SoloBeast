@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.example.solobeast.Extras.GuiderDialog;
 import com.example.solobeast.Extras.PickerDialog;
+import com.example.solobeast.Extras.onPickerSelectedListener;
 import com.example.solobeast.Objects.Task;
 import com.example.solobeast.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -42,7 +43,7 @@ public class DetailedTaskAct extends AppCompatActivity {
         task = new Task();
         determineEditOrAdd(fromActivity);
         changeBackgroundColorAsTaskDiff();
-        GuiderDialog gd = new GuiderDialog(this,"DetailedTaskAct", "lol haha nice");
+        GuiderDialog gd = new GuiderDialog(this,"DetailedTaskAct", "This is a explanation for you 😀");
         gd.startDialog();
         taskTimeTv.setOnFocusChangeListener((view, hasFocus) -> {
             if(hasFocus)
@@ -56,7 +57,7 @@ public class DetailedTaskAct extends AppCompatActivity {
 
         });
         submitFormBtn.setOnClickListener(view -> {
-           counter++;
+            ++counter;
            if(counter == 1){
                openEditTexts();
                setUpdateIconDrawable();
@@ -90,7 +91,7 @@ public class DetailedTaskAct extends AppCompatActivity {
         // Instantiate the PickerDialog
         PickerDialog pickerDialog = new PickerDialog(this, "diff");
 
-        pickerDialog.setOnNameSelectedListener(new PickerDialog.OnPickerSelectedListener() {
+        pickerDialog.setOnNameSelectedListener(new onPickerSelectedListener() {
             @Override
             public void onNameSelected(String name) {
                 // Display the selected nam
@@ -124,13 +125,13 @@ public class DetailedTaskAct extends AppCompatActivity {
             userChoice = "EditTask";
             getValuesFromPrevActivityTask();
             insertEditTextsValues();
-
         }
         else{
             userChoice = "AddTask";
 
             setAddIconDrawable();
             openEditTexts();
+            ++counter;
         }
     }
 

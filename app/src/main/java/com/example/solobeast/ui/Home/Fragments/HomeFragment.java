@@ -128,14 +128,14 @@ public class HomeFragment extends Fragment implements RecyclerViewFunctionalitie
         alertDialog.setPositiveButton("Yes", (dialogInterface, i) -> {
             dialogInterface.cancel();
 
-            DatabaseReference myRef = FirebaseDatabase.getInstance().getReference(
-                    "Users/"
-                            + FirebaseAuth.getInstance().getCurrentUser().getUid()
-                            +"/Tasks"
-            );
-            myRef = myRef.child(tasksList.get(position).getKey());
-            myRef.removeValue();
-            adapter.notifyItemRemoved(position);
+//            DatabaseReference myRef = FirebaseDatabase.getInstance().getReference(
+//                    "Users/"
+//                            + FirebaseAuth.getInstance().getCurrentUser().getUid()
+//                            +"/Tasks"
+//            );
+//            myRef = myRef.child(tasksList.get(position).getKey());
+//            myRef.removeValue();
+//            adapter.notifyItemRemoved(position);
 
         });
         alertDialog.setNegativeButton("Cancel", (dialogInterface, i) -> {

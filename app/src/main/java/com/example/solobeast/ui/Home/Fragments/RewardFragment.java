@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.solobeast.Adapters.RecyclerViewFunctionalities;
 import com.example.solobeast.Adapters.RewardAdapter;
@@ -108,14 +109,33 @@ public class RewardFragment extends Fragment implements RecyclerViewFunctionalit
 
     @Override
     public boolean onItemLongClick(int position) {
-        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference(
-                "Users/"
-                        + FirebaseAuth.getInstance().getCurrentUser().getUid()
-                        +"/Rewards"
-        );
-        myRef = myRef.child(rewardsList.get(position).getKey());
-        myRef.removeValue();
-        adapter.notifyItemRemoved(position);
+        AlertDialog.Builder alertDialog;
+        alertDialog = new AlertDialog.Builder(getContext());
+
+        alertDialog
+                .setMessage("Are you sure you want to delete this reward?")
+                .setTitle("Delete Reward");
+
+        alertDialog.setPositiveButton("Yes", (dialogInterface, i) -> {
+            dialogInterface.cancel();
+
+            DatabaseReference myRef = FirebaseDatabase.getInstance().getReference(
+                    "Users/"
+                            + FirebaseAuth.getInstance().getCurrentUser().getUid()
+                            +"/Rewards"
+            );
+            myRef = myRef.child(rewardsList.get(position).getKey());
+            myRef.removeValue();
+            adapter.notifyItemRemoved(position);
+
+        });
+        alertDialog.setNegativeButton("Cancel", (dialogInterface, i) -> {
+            dialogInterface.cancel();
+            Toast.makeText(getContext(),"Event was cancelled successfully",Toast.LENGTH_LONG).show();
+        });
+        AlertDialog alert = alertDialog.create();
+        alert.show();
+
         return true;
         //REMOVE FROM DB.
     }

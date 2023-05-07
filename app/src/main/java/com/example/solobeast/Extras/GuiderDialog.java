@@ -14,14 +14,12 @@ public class GuiderDialog extends Dialog {
     private String mActivityName;
     private String mExplanation;
     private  ActivityGuideTracker activityTracker;
-
     public GuiderDialog(Context context, String activityName, String explanation) {
         super(context);
         mContext = context;
         mActivityName = activityName;
         mExplanation = explanation;
     }
-
     private void init() {
         show();
         setContentView(R.layout.custom_guider_dialog);
@@ -30,9 +28,8 @@ public class GuiderDialog extends Dialog {
         Button okBtn = findViewById(R.id.proceed_guide_btn);
 
         okBtn.setOnClickListener(view ->
-                proceedOk(view));
+                proceedOk());
     }
-
     public void startDialog() {
         activityTracker = new ActivityGuideTracker(mContext);
         if (!activityTracker.isVisited(mActivityName)) {
@@ -40,8 +37,7 @@ public class GuiderDialog extends Dialog {
             activityTracker.setVisited(mActivityName);
         }
     }
-    public void proceedOk(View view){
+    public void proceedOk(){
         dismiss();
     }
-
 }

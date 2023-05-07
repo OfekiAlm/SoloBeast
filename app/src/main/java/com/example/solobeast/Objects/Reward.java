@@ -4,30 +4,32 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 @IgnoreExtraProperties
 public class Reward {
-    public int xpAmount;
-    public String rewardName;
-    public String description;
-    public String key;
+    private int xpAmount;
+    private String rewardName;
+    private String description;
+    private String key;
     public Reward(){
         //DEFAULT FOR FIREBASE.\\
     }
     public Reward(String name, String desc ,int xp,String key){
-        if(nameIsValid(name)) this.rewardName = name;
-        if(descIsValid(desc)){this.description = desc;}
-        this.xpAmount = xp;
+        if(nameIsValid(name)) {this.rewardName = name;}else {this.rewardName = "Default name";}
+        if(descIsValid(desc)){this.description = desc;}else {this.description = "Default description cause none was provided";}
+        if (xpIsValid(xp)){this.xpAmount = xp;}else{this.xpAmount = 1;}
         this.key = key;
     }
-
     private boolean descIsValid(String description) {
+        if(description.isEmpty()) return false;
         return true;
     }
-
+    private boolean xpIsValid(int xp){
+        boolean a;
+        a = (xp != 0) ? true : false;
+        return a;
+    }
     private boolean nameIsValid(String name) {
         if(name.isEmpty()) return false;
         return true;
     }
-
-
     public String getRewardName() {
         return this.rewardName;
     }

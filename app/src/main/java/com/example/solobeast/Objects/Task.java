@@ -9,11 +9,11 @@ import java.util.List;
 //FOR FIREBASE\\
 public class Task {
 
-    public String time;
-    public String name;
-    public String description;
-    public String difficulty;
-    public String key;
+    private String time;
+    private String name;
+    private String description;
+    private String difficulty;
+    private String key;
     public Task(){
         //DEFAULT FOR FIREBASE.\\
     }
