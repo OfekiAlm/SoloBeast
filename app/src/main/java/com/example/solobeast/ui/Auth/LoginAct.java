@@ -26,9 +26,25 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 
+/**
+
+ This class handles the login process for the user. It provides a simple interface for the user
+ to input their login credentials, validates their input and attempts to sign in the user using
+ FirebaseAuth. If the sign-in is successful, the user is redirected to the MainActivity. Otherwise,
+ appropriate error messages are displayed to the user based on the type of error encountered.
+ @author Ofek Almog
+ */
 public class LoginAct extends AppCompatActivity {
-    FirebaseAuth mAuth;
-    TextInputEditText editTextEmail, editTextpassword;
+    FirebaseAuth mAuth; // Firebase Authentication instance
+    TextInputEditText editTextEmail;// EditText field for email
+    TextInputEditText editTextpassword;// EditText field for password
+
+    /**
+     * Initializes the activity layout and Firebase Authentication instance.
+     * Also, it calls the init method to initialize the layout views.
+     *
+     * @param savedInstanceState An instance of Bundle class to restore the activity to a previous state if necessary.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,26 +52,24 @@ public class LoginAct extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-
         init();
     }
 
-
-
+    /**
+     * Initializes the views and listeners for the activity.
+     */
     private void init(){
         editTextEmail = (TextInputEditText) findViewById(R.id.editTextTextEmailAddress_Register);
         editTextpassword = (TextInputEditText) findViewById(R.id.editTextTextPassword_Register);
         TextView moveToRegister = findViewById(R.id.move_screen);
 
-        moveToRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(LoginAct.this, RegisterAct.class));
-            }
-        });
+        moveToRegister.setOnClickListener(view -> startActivity(new Intent(LoginAct.this, RegisterAct.class)));
     }
 
-    // TODO: MAKE THIS CODE CLEANER, DUPLICATED CODE IN LoginAct.java
+    /**
+     * Validates user input for email and password fields.
+     * @return boolean true if input is valid, false otherwise.
+     */
     private boolean check_validation_credentials() {
         if(editTextEmail.getText().length() ==0){
             editTextEmail.setError("You haven't typed any credentials");
@@ -70,6 +84,10 @@ public class LoginAct extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Attempts to log the user in using the provided email and password.
+     * @param view the view that triggered the method.
+     */
     public void login(View view){
         boolean validation_credentials_are_valid= check_validation_credentials();
         if(validation_credentials_are_valid) {
@@ -101,6 +119,11 @@ public class LoginAct extends AppCompatActivity {
 
         }
     }
+
+    /**
+     Moves the user to the main activity screen and passes the email as an extra parameter.
+     @param email the email of the user
+     */
     private void move_screen(String email){
         Intent i = new Intent(LoginAct.this, MainActivity.class);
         String Identifier  = "username_of_user";
@@ -108,7 +131,9 @@ public class LoginAct extends AppCompatActivity {
         startActivity(i);
     }
 
-
+    /**
+     Called when the activity is starting. Checks if the user is signed in and updates the UI accordingly.
+     */
     @Override
     public void onStart() {
         super.onStart();
@@ -120,6 +145,10 @@ public class LoginAct extends AppCompatActivity {
         }
     }
 
+    /**
+     Updates the user interface after authentication.
+     @param currentUser the currently authenticated user
+     */
     private void updateUI(FirebaseUser currentUser) {
 
         Log.d("AuthData","Email is " + currentUser.getEmail());

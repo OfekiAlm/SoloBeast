@@ -222,7 +222,9 @@ public class TaskTimerAct extends AppCompatActivity {
     /**
      * Sends a notification to the user with the specified title and message content.
      *
-     * The method creates a notification with the specified title and message content, and sends it to the user. The notification is shown with the app's icon and the current timestamp. When the user taps the notification, the app is launched and the main activity is displayed.
+     * The method creates a notification with the specified title and message content,
+     * and sends it to the user. The notification is shown with the app's icon and the current timestamp.
+     * When the user taps the notification, the app is launched and the main activity is displayed.
      *
      * @param title the title of the notification.
      * @param msgContent the message content of the notification.
