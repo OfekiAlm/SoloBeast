@@ -129,7 +129,7 @@ public class RegisterAct extends AppCompatActivity {
 
         // Reset activity guide tracker for new users
         ActivityGuideTracker agt = new ActivityGuideTracker(this);
-        agt.clearActivitesStatus();
+        agt.clearActivitiesStatus();
 
         //FirebaseAuth object
         mAuth = FirebaseAuth.getInstance();

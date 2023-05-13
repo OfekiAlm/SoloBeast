@@ -5,8 +5,11 @@ package com.example.solobeast.Objects;
  * @author Ofek Almog
  */
 public class User {
-    private String phoneNumber; // The phone number of the user
-    private int currentXP; // The current XP amount of the user
+    /** The phone number of the user*/
+    private String phoneNumber;
+
+    /** The current XP amount of the user*/
+    private int currentXP;
 
     /**
      * Default constructor for Firebase.
