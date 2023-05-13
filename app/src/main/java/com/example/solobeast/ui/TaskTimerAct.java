@@ -40,37 +40,63 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * The TaskTimerAct class represents an activity that sets a timer for a task.
+ * It extends the AppCompatActivity class.
+ * @author Ofek Almog
+ */
 public class TaskTimerAct extends AppCompatActivity {
+
+    /** The time string for the task. */
     String time;
+
+    /** The TextView for displaying the clock. */
     TextView clock;
-    TextView timeTV,airplaneModeTv;
+
+    /** The TextView for displaying the task time. */
+    TextView timeTV;
+
+    /** The notification counter. */
     static int notificationCounter;
+
+    /** The time difficulty. */
     static String diff;
+
+    /** The time in minutes. */
     static int timeInMinutes;
+
+    /**
+     * Initializes the activity.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_timer);
         init();
 
+        // Convert time string to seconds
         int timerSeconds = indicateTimeAsSeconds(time);
         timeInMinutes = timerSeconds / 60;
 
 
-
+        // Calculate XP for task
         int xpToAdd = calculatePointsForTask(timeInMinutes,diff);
         sendNotificationToUser("This task will give you", "{ "+ xpToAdd + " } xp" );
 
         long timerAsMiliseconds = timerSeconds * 1000;
         scheduleAnotification(timerAsMiliseconds);
+
+        // Start the timer
         CountDownTimer timer= new CountDownTimer(timerAsMiliseconds, 1000){
             @Override
             public void onTick(long l) {
-                long durationMillis = l; // replace with your duration in milliseconds
-
+                // Convert duration to hours, minutes, and seconds
+                long durationMillis = l;
                 long hours = TimeUnit.MILLISECONDS.toHours(durationMillis);
                 long minutes = TimeUnit.MILLISECONDS.toMinutes(durationMillis) - TimeUnit.HOURS.toMinutes(hours);
                 long seconds = TimeUnit.MILLISECONDS.toSeconds(durationMillis) - TimeUnit.HOURS.toSeconds(hours) - TimeUnit.MINUTES.toSeconds(minutes);
+
+                // Display duration as a string in the clock TextView
 
                 String durationString = String.format("%02d : %02d : %02d", hours, minutes, seconds);
 
@@ -79,47 +105,38 @@ public class TaskTimerAct extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                //Toast.makeText(TaskTimerAct.this,"lol this is ended quickly",Toast.LENGTH_LONG).show();
+                // Display XP earned and update Firebase
+
                 int xpToAdd = calculatePointsForTask(timeInMinutes,diff);
                 sendNotificationToUser("You did it!", "You're rewarded yourself with more { "+ xpToAdd + " } xp" );
                 updateXPtoUserFirebase(xpToAdd,"IncreaseVal");
                 finish();
             }
         }.start();
+
+        // Start the TimerService
         Intent taskTimer = new Intent(this, TimerService.class);
         taskTimer.putExtra("task_time",timerSeconds);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startService(taskTimer);
         }
-//        airplaneModeTv.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //applyAirplaneMode();
-//            }
-//        });
-        timeTV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                stopService(taskTimer);
-                timer.cancel();
-                sendNotificationToUser("You cancelled the task","Waiting for you to come back...");
-                finish();
-            }
-        });
 
+        // Set up onClickListener for cancel button
+        timeTV.setOnClickListener(view -> {
+            stopService(taskTimer);
+            timer.cancel();
+            sendNotificationToUser("You cancelled the task","Waiting for you to come back...");
+            finish();
+        });
 
     }
 
-//    private void applyAirplaneMode() {
-//        // Get the system service for Airplane Mode
-//        Settings.Global.putInt(getContentResolver(), Settings.Global.AIRPLANE_MODE_ON, 1);
-//
-//        // Broadcast the intent to inform the system that airplane mode has changed
-//        Intent intent = new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
-//        intent.putExtra("state", true);
-//        sendBroadcast(intent);
-//    }
-
+    /**
+     * Calculates XP earned for a task.
+     * @param taskTimeInMinutes The time taken to complete the task in minutes.
+     * @param difficulty The difficulty of the task.
+     * @return The XP earned for the task.
+     */
     private int calculatePointsForTask(int taskTimeInMinutes, String difficulty) {
         int basePoints = 0;
         switch (difficulty) {
@@ -146,79 +163,77 @@ public class TaskTimerAct extends AppCompatActivity {
         return Math.min(200, (int) points);
     }
 
-
-
-    private void scheduleAnotification(long timerAsMiliseconds){
-        if (timerAsMiliseconds >2*4*900000){ //2-hour
+    /**
+     Schedule notifications for specific time intervals before the end of the timer.
+     If the time left is less than a specific interval, a notification will not be scheduled for that interval.
+     @param timeAsMilliseconds The remaining time on the timer in milliseconds.
+     */
+    private void scheduleAnotification(long timeAsMilliseconds){
+        if (timeAsMilliseconds >2*4*900000){ //2-hour
             Timer timer = new Timer();
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    // This code will be executed when the timer reaches 5 minutes left
                     sendNotificationToUser("KEEP GOING!","2 hours left.");
                     Log.d("Notifications","scheduled a notification for 2 hours mark");
                 }
-            }, timerAsMiliseconds -2*4*900000); // schedule the task to run when there are 5 minutes left (300000 milliseconds)
+            }, timeAsMilliseconds -2*4*900000);
 
             // Start the timer
         }
-        if (timerAsMiliseconds >4*900000){ //1-hour
+        if (timeAsMilliseconds >4*900000){ //1-hour
             Timer timer = new Timer();
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    // This code will be executed when the timer reaches 5 minutes left
                     sendNotificationToUser("KEEP GOING!","1 hour left.");
                     Log.w("Notifications","scheduled a notification for 1 hours mark");
 
                 }
-            }, timerAsMiliseconds - 4*900000); // schedule the task to run when there are 5 minutes left (300000 milliseconds)
+            }, timeAsMilliseconds - 4*900000);
 
             // Start the timer
         }
-        if (timerAsMiliseconds >2*900000){ //30-min
+        if (timeAsMilliseconds >2*900000){ //30-min
             Timer timer = new Timer();
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    // This code will be executed when the timer reaches 5 minutes left
                     sendNotificationToUser("YOU'RE ALMOST DONE!","30 minutes left.");
                     Log.d("Notifications","scheduled a notification for 30 min mark");
-
                 }
-            }, timerAsMiliseconds - 2*900000); // schedule the task to run when there are 5 minutes left (300000 milliseconds)
+            }, timeAsMilliseconds - 2*900000);
 
             // Start the timer
         }
-        if (timerAsMiliseconds > 900000){ //15-min
+        if (timeAsMilliseconds > 900000){ //15-min
             Timer timer = new Timer();
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    // This code will be executed when the timer reaches 5 minutes left
                     sendNotificationToUser("YOU'RE ALMOST DONE!","15 minutes left.");
                     Log.d("Notifications","scheduled a notification for 15 min mark");
 
                 }
-            }, timerAsMiliseconds - 900000); // schedule the task to run when there are 5 minutes left (300000 milliseconds)
+            }, timeAsMilliseconds - 900000);
 
             // Start the timer
         }
-        if (timerAsMiliseconds > 300000){//5-min
+        if (timeAsMilliseconds > 300000){//5-min
             Timer timer = new Timer();
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    // This code will be executed when the timer reaches 5 minutes left
                     sendNotificationToUser("YOU'RE ALMOST DONE!","5 minutes left.");
                     Log.d("Notifications","scheduled a notification for 5 minutes mark");
                 }
-            }, timerAsMiliseconds - 300000); // schedule the task to run when there are 5 minutes left (300000 milliseconds)
+            }, timeAsMilliseconds - 300000);
 
             // Start the timer
         }
 
     }
+
     /**
      * Sends a notification to the user with the specified title and message content.
      *
@@ -260,6 +275,11 @@ public class TaskTimerAct extends AppCompatActivity {
 
     }
 
+    /**
+     Initializes the activity by finding the necessary views and retrieving
+     data from the Intent passed to the activity.
+     Sets up the initial values for the timer and notification counter.
+     */
     private void init(){
         timeTV = findViewById(R.id.timer_tv);
         //airplaneModeTv = findViewById(R.id.airplane_mode_tv);
@@ -271,6 +291,12 @@ public class TaskTimerAct extends AppCompatActivity {
             Log.d("Value","the time is: \t"+time);
         }
     }
+
+    /**
+     Converts a string in the format "hh:mm" to the total number of seconds represented by the time.
+     @param time A string representing a time in the format "hh:mm".
+     @return An integer representing the total number of seconds represented by the input time.
+     */
     public int indicateTimeAsSeconds(String time){
         int timerTime = 0;
         List<String> arrayList = Arrays.asList(time.split(":"));
