@@ -6,12 +6,10 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.solobeast.Extras.PickerDialog;
 import com.example.solobeast.Extras.onPickerSelectedListener;
 import com.example.solobeast.Objects.Reward;
-import com.example.solobeast.Objects.Task;
 import com.example.solobeast.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -123,7 +121,7 @@ public class DetailedRewardAct extends AppCompatActivity {
 
     private void getValuesFromPrevActivityReward() {
         reward.setRewardName(getIntent().getStringExtra("selected_reward_name"));
-        reward.setDesc(getIntent().getStringExtra("selected_reward_desc"));
+        reward.setDescription(getIntent().getStringExtra("selected_reward_desc"));
         reward.setXP(getIntent().getIntExtra("selected_reward_xp",0));
         reward.setKey(getIntent().getStringExtra("selected_reward_key"));
     }
