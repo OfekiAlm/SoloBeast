@@ -8,10 +8,18 @@ import com.google.firebase.database.IgnoreExtraProperties;
  */
 @IgnoreExtraProperties
 public class Reward {
-    private int xpAmount; // amount of experience points earned by completing the reward
-    private String rewardName;  // name of the reward
-    private String description; // description of the reward
-    private String key;  // key used for identification in the database
+
+    /** amount of experience points earned by completing the reward */
+    private int xpAmount;
+
+    /** name of the reward */
+    private String rewardName;
+
+    /** description of the reward */
+    private String description;
+
+    /** key used for identification in the database */
+    private String key;
 
     /**
      Default constructor for Firebase.

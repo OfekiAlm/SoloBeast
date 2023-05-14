@@ -107,7 +107,7 @@ public class RewardAdapter extends RecyclerView.Adapter<RewardAdapter.RewardView
     class RewardViewHolder extends RecyclerView.ViewHolder{
 
         /**
-         The TextView's that displays the properties of the reward.
+         The TextViews that displays the properties of the reward.
          */
         TextView RewardNameTv,RewardDescTv,xpTv;
 

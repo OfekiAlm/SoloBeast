@@ -108,7 +108,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     class TaskViewHolder extends RecyclerView.ViewHolder{
 
         /**
-         The TextView's that displays the properties of the task.
+         The TextViews that displays the properties of the task.
          */
         TextView taskNameTv, difficultyTv,timeTv;
 

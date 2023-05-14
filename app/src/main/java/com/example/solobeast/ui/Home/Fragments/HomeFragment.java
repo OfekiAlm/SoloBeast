@@ -35,13 +35,34 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ A fragment for displaying and managing the user's task list. The 'HomePage'
+ Implements the RecyclerViewFunctionalities interface to handle RecyclerView actions.
+ @author Ofek Almog
+ */
 public class HomeFragment extends Fragment implements RecyclerViewFunctionalities {
+
+    /** List of tasks */
     List<Task> tasksList;
+
+    /** Adapter for the RecyclerView */
     TaskAdapter adapter;
+
+    /** RecyclerView for displaying the tasks */
     RecyclerView recyclerView;
+
+    /** Reference to the Firebase Realtime Database */
     DatabaseReference myRef;
+
+    /** Firebase Authentication instance */
     FirebaseAuth mAuth;
 
+    /**
+     Called immediately after onCreateView has returned, but before any saved state has been restored in to the view.
+     Initializes the RecyclerView and retrieves the user's tasks from the database.
+     @param view The View returned by onCreateView.
+     @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state as given here.
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -51,7 +72,8 @@ public class HomeFragment extends Fragment implements RecyclerViewFunctionalitie
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),1));
 
         mAuth = FirebaseAuth.getInstance();
-        //REFERENCE\\
+
+        // Set the reference to the Firebase Realtime Database
         myRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://solobeast-android-default-rtdb.firebaseio.com/");
         myRef = myRef.child("Users/"
                 + FirebaseAuth.getInstance().getCurrentUser().getUid()
@@ -61,6 +83,10 @@ public class HomeFragment extends Fragment implements RecyclerViewFunctionalitie
         this.retrieveData(this);
     }
 
+    /**
+     Retrieves the user's tasks from the Firebase Realtime Database and updates the RecyclerView.
+     @param recyclerViewFunctionalities An instance of the RecyclerViewFunctionalities interface.
+     */
     private void retrieveData(RecyclerViewFunctionalities recyclerViewFunctionalities) {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -81,6 +107,14 @@ public class HomeFragment extends Fragment implements RecyclerViewFunctionalitie
         });
     }
 
+    /**
+     Called to have the fragment instantiate its user interface view.
+     Inflates the layout for this fragment and returns the inflated View object.
+     @param inflater The LayoutInflater object that can be used to inflate any views in the fragment.
+     @param container If non-null, this is the parent view that the fragment's UI should be attached to.
+     @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state as given here.
+     @return The View for the fragment's UI, or null.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -88,9 +122,10 @@ public class HomeFragment extends Fragment implements RecyclerViewFunctionalitie
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
-
-
-
+    /**
+     Method to move to the detailed screen of a selected task.
+     @param task The task to be shown in the detailed screen.
+     */
     private void moveToDetailedScreen(Task task){
         Log.d("MoveScreen","Moving to detailed screen");
         Intent i = new Intent(getActivity(), DetailedTaskAct.class);
@@ -104,6 +139,11 @@ public class HomeFragment extends Fragment implements RecyclerViewFunctionalitie
         startActivity(i);
     }
 
+    /**
+     Handles the action when an item in the RecyclerView is clicked.
+     Starts the DetailedTaskAct activity with the information of the selected task.
+     @param position The position of the selected item in the RecyclerView.
+     */
     @Override
     public void onItemClick(int position) {
         Task t = new Task(
@@ -116,6 +156,13 @@ public class HomeFragment extends Fragment implements RecyclerViewFunctionalitie
         moveToDetailedScreen(t);
     }
 
+    /**
+     Handles the long-click event of an item in the RecyclerView list.
+     Shows an AlertDialog with a confirmation message for task deletion, and deletes the task from the database
+     and updates the adapter on "Yes" button click.
+     @param position the position of the item in the RecyclerView list.
+     @return true if the event was consumed, false otherwise.
+     */
     @Override
     public boolean onItemLongClick(int position) {
         AlertDialog.Builder alertDialog;
@@ -146,9 +193,6 @@ public class HomeFragment extends Fragment implements RecyclerViewFunctionalitie
         alert.show();
         return true;
         //REMOVE FROM DB.
-    }
-    private void updateTask(){
-
     }
 
 }

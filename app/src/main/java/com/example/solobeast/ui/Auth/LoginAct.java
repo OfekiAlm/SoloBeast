@@ -27,7 +27,6 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 
 /**
-
  This class handles the login process for the user. It provides a simple interface for the user
  to input their login credentials, validates their input and attempts to sign in the user using
  FirebaseAuth. If the sign-in is successful, the user is redirected to the MainActivity. Otherwise,
@@ -35,9 +34,15 @@ import com.google.firebase.auth.FirebaseUser;
  @author Ofek Almog
  */
 public class LoginAct extends AppCompatActivity {
-    FirebaseAuth mAuth; // Firebase Authentication instance
-    TextInputEditText editTextEmail;// EditText field for email
-    TextInputEditText editTextpassword;// EditText field for password
+
+    /** Firebase Authentication instance */
+    FirebaseAuth mAuth;
+
+    /** EditText field for email */
+    TextInputEditText editTextEmail;
+
+    /** EditText field for password */
+    TextInputEditText editTextpassword;
 
     /**
      * Initializes the activity layout and Firebase Authentication instance.

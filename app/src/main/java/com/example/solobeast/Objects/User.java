@@ -5,6 +5,7 @@ package com.example.solobeast.Objects;
  * @author Ofek Almog
  */
 public class User {
+
     /** The phone number of the user*/
     private String phoneNumber;
 

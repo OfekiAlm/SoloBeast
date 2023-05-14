@@ -11,9 +11,23 @@ import android.widget.TextView;
 import com.example.solobeast.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+/**
+ The MailContactAct class is an activity that allows the user to send an email to a specified recipient.
+ It contains a title and body for the email, as well as a submit button that opens the email client to send the email.
+ @author Ofek Almog
+ */
 public class MailContactAct extends AppCompatActivity {
+
+    /** TextViews to display the email title and body. */
     TextView emailTitleTv,emailBodyTv;
+
+    /** FloatingActionButton to submit the email. */
     FloatingActionButton submitMail;
+
+    /**
+     Initializes the activity and sets up the submit button to send the email when clicked.
+     @param savedInstanceState the saved state of the activity, or null if there is no saved state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +47,9 @@ public class MailContactAct extends AppCompatActivity {
 
     }
 
+    /**
+     Initializes the UI components of the activity.
+     */
     private void init(){
         submitMail = findViewById(R.id.fab_contact);
         emailTitleTv = findViewById(R.id.title_contact_et);

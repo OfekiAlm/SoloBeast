@@ -8,18 +8,40 @@ import android.widget.TextView;
 
 import com.example.solobeast.R;
 
+/**
+ A custom dialog class used to display guide messages for activities to the user. {@link ActivityGuideTracker}
+ @author Ofek Almog
+ */
 public class GuiderDialog extends Dialog {
 
+    /**The context of the dialog*/
     private Context mContext;
+
+    /** The name of the activity associated with the dialog */
     private String mActivityName;
+
+    /** The explanation message to display in the dialog */
     private String mExplanation;
-    private  ActivityGuideTracker activityTracker;
+
+    /** The activity tracker instance */
+    private ActivityGuideTracker activityTracker;
+
+    /**
+     Constructs a new GuiderDialog instance.
+     @param context The application context.
+     @param activityName The name of the activity to display the guide for.
+     @param explanation The message to display to the user.
+     */
     public GuiderDialog(Context context, String activityName, String explanation) {
         super(context);
         mContext = context;
         mActivityName = activityName;
         mExplanation = explanation;
     }
+
+    /**
+     Initializes the dialog view and shows the dialog.
+     */
     private void init() {
         show();
         setContentView(R.layout.custom_guider_dialog);
@@ -30,6 +52,10 @@ public class GuiderDialog extends Dialog {
         okBtn.setOnClickListener(view ->
                 proceedOk());
     }
+
+    /**
+     Starts the dialog for the given activity if it has not been visited before.
+     */
     public void startDialog() {
         activityTracker = new ActivityGuideTracker(mContext);
         if (!activityTracker.isVisited(mActivityName)) {
@@ -37,6 +63,10 @@ public class GuiderDialog extends Dialog {
             activityTracker.setVisited(mActivityName);
         }
     }
+
+    /**
+     Dismisses the dialog when the "OK" button is clicked.
+     */
     public void proceedOk(){
         dismiss();
     }

@@ -14,11 +14,20 @@ import java.util.List;
 //FOR FIREBASE\\
 public class Task {
 
-    private String time; // The estimated time to complete the task, represented as a string.
-    private String name; // The name of the task, represented as a string.
-    private String description; // The description of the task, represented as a string.
-    private String difficulty; // The difficulty of the task, represented as a string.
-    private String key; // key used for identification in the database.
+    /** The estimated time to complete the task, represented as a string. */
+    private String time;
+
+    /**The name of the task, represented as a string.*/
+    private String name;
+
+    /**The description of the task, represented as a string.*/
+    private String description;
+
+    /**The difficulty of the task, represented as a string.*/
+    private String difficulty;
+
+    /** key used for identification in the database. */
+    private String key;
 
     /**
      Default constructor for Firebase.

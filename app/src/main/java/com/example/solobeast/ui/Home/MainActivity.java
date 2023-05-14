@@ -44,26 +44,52 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+/**
+ * MainActivity is the main screen of the app, containing a navigation drawer with various options,
+ * a bottom navigation bar, and a floating action button for adding tasks or rewards based on the fragments. It also
+ * displays user XP, allows users to sign out, and initializes various fragments.
+ * @author Ofek Almog
+ */
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FirebaseCallback{
+
+    /** ActivityMainBinding is a generated class that provides easy access to all views in the layout. */
     ActivityMainBinding binding;
+
+    /** AirplaneModeReceiver is a broadcast receiver for detecting airplane mode changes. */
     AirplaneModeReceiver airplaneModeReceiver;
+
+    /** current_user stores the current User object. */
     public static User current_user;
+
+    /** drawerLayout is the layout for the navigation drawer. */
     DrawerLayout drawerLayout;
+
+    /** navigationView is the navigation drawer itself. */
     NavigationView navigationView;
+
+    /** addBtn is the floating action button for adding tasks or rewards. */
     FloatingActionButton addBtn;
+
+    /** mAuth is the instance of the FirebaseAuth class for authentication. */
     FirebaseAuth mAuth;
+
+    /** xpDisplayTv is the TextView that displays the user's XP. */
     TextView xpDisplayTv;
 
-    @Override
-    public void onUserDetailsReceived() {
-        xpDisplayTv.setText(""+ current_user.getCurrentXP());
-    }
-
+    /** Fragments is an enum representing the three possible fragments on the main screen. */
     enum Fragments{
         HOME,
         REWARDS,
         PROFILE
     }
+
+    /**
+     * onCreate is called when the activity is starting. It initializes various components and
+     * sets listeners for the navigation drawer, bottom navigation bar, and floating action button.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after previously being
+     * saved then this Bundle contains the data it most recently supplied in {@link #onSaveInstanceState(Bundle)}.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +105,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        }
 
         addBtn.setOnClickListener(view -> {
-            //Fragment f = this.getFragmentManager().findFragmentById();
             if(determineFragment() == Fragments.HOME){
                 Intent i = new Intent(getApplicationContext(), DetailedTaskAct.class);
                 i.putExtra("from_intent","Add");
@@ -100,17 +125,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.homescreen:
-                    //finish();
                     replaceFragment(new HomeFragment(),Fragments.HOME);
                     addBtn.setVisibility(View.VISIBLE);
                     break;
                 case R.id.profile:
-                    //finish();
                     replaceFragment(new ProfileFragment(),Fragments.PROFILE);
                     addBtn.setVisibility(View.GONE);
                     break;
                 case R.id.reward:
-                    //finish();
                     replaceFragment(new RewardFragment(),Fragments.REWARDS);
                     addBtn.setVisibility(View.VISIBLE);
                     break;
@@ -119,6 +141,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
         navdrawer_init();
     }
+
+    /**
+     * Initializes the activity by inflating the layout, setting the content view,
+     * replacing the fragment, setting up the bottom navigation view and setting the XP display.
+     */
     private void init(){
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -133,6 +160,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //xpDisplayTv.setOnLongClickListener(this);
     }
 
+    /**
+     * Initializes the navigation drawer by setting up the toolbar, drawer layout, toggle,
+     * and navigation view.
+     */
     private void navdrawer_init(){
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -149,6 +180,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    /**
+     Overrides the default behavior of the back button press to close the navigation drawer if it is open,
+     otherwise it calls the default behavior of the back button press.
+     */
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -158,6 +193,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    /**
+     This method is called when a menu item in the Navigation Drawer is selected.
+     It handles the item selection based on the item ID and performs the corresponding action.
+     @param item The menu item that was selected in the Navigation Drawer
+    */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()){
@@ -191,10 +231,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    /**
+     Signs out the current user by calling the signOut() method of FirebaseAuth instance.
+     */
     public void sign_out() {
         mAuth.signOut();
     }
 
+    /**
+     Called when the activity is becoming visible to the user. This method checks if a user is signed in
+     and updates the UI accordingly. If the user is not signed in, it starts the LoginActivity.
+     @see LoginAct
+     */
     @Override
     public void onStart() {
         super.onStart();
@@ -205,6 +253,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(new Intent(this,LoginAct.class));
         }
     }
+
+    /**
+     Replaces the current fragment in the FrameLayout container with the specified fragment instance.
+     @param theInstance the fragment instance to replace the current fragment with
+     @param enumVersion an enumeration representing the type of fragment to be replaced
+     */
     private void replaceFragment(Fragment theInstance, Fragments enumVersion) {
         String onWhichFragment = "";
         int theFrag = enumVersion.ordinal();
@@ -225,6 +279,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.commit();
     }
 
+    /**
+     Determines the current visible fragment by checking if the rewards or profile fragment is visible,
+     if not, returns the HOME fragment.
+     @return An enum value of the currently visible fragment.
+     */
     public Fragments determineFragment(){
         Fragment rewardsFrag = (Fragment)getSupportFragmentManager().findFragmentByTag("REWARDS");
         Fragment profileFrag = (Fragment)getSupportFragmentManager().findFragmentByTag("PROFILE");
@@ -237,18 +296,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return Fragments.HOME;
     }
 
-
+    /**
+     This method is called when the activity is resumed from a paused state.
+     It registers an instance of AirplaneModeReceiver to receive broadcast intents for airplane mode changes.
+     */
     @Override
     public void onResume() {
         super.onResume();
         registerReceiver(airplaneModeReceiver, new IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED));
     }
+
+    /**
+     This method is called when the activity is going into the background and unregistering the airplane mode broadcast receiver to avoid leaks
+     or unnecessary processing while the activity is not visible.
+     */
     @Override
     public void onPause() {
         super.onPause();
         unregisterReceiver(airplaneModeReceiver);
     }
 
+    /**
+     Retrieves user details from the Firebase Realtime Database using the Firebase Authentication user ID
+     and updates the {@link #current_user} object accordingly.
+     @param callback an interface that provides a callback method for when the user details have been received
+     */
     public static void getUserDetails(FirebaseCallback callback){
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getUid());
         Task<DataSnapshot> task = ref.get();
@@ -263,6 +335,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Log.d("AuthData","The opreation is not good\nCause: \n" +e);
         });
     }
+
     /**
      * Updates the current XP value of the current user in Firebase database.
      *
@@ -284,5 +357,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         ref.setValue(CurrentValue);
         MainActivity.current_user.setCurrentXP(CurrentValue);
+    }
+
+    /**
+     * onUserDetailsReceived is a method from the FirebaseCallback interface that sets the
+     * text of xpDisplayTv to the user's current XP.
+     */
+    @Override
+    public void onUserDetailsReceived() {
+        xpDisplayTv.setText(""+ current_user.getCurrentXP());
     }
 }
