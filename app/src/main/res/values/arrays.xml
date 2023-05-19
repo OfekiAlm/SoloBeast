@@ -1,0 +1,55 @@
+<resources>
+
+    <string-array name="activities">
+        <item>MainActivity</item>
+        <item>Profile</item>
+        <item>Rewards</item>
+        <item>DetailedTaskActivity</item>
+    </string-array>
+
+    <string-array name="activities_values">
+        <item>MainActivity</item>
+        <item>Profile</item>
+        <item>Rewards</item>
+        <item>DetailedTaskActivity</item>
+    </string-array>
+
+    <string-array name="activities_default_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+
+
+
+
+
+
+
+
+
+    <string-array name="color_names">
+        <item>Red</item>
+        <item>Green</item>
+        <item>Blue</item>
+        <item>Yellow</item>
+        <item>Orange</item>
+        <item>Purple</item>
+    </string-array>
+
+    <string-array name="color_values">
+        <item>#ff0000</item>
+        <item>#00ff00</item>
+        <item>#0000ff</item>
+        <item>#ffff00</item>
+        <item>#ffa500</item>
+        <item>#800080</item>
+    </string-array>
+
+    <string-array name="default_colors">
+        <item>#ff0000</item>
+        <item>#00ff00</item>
+        <item>#0000ff</item>
+    </string-array>
+</resources>

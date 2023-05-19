@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -34,6 +35,7 @@ import com.example.solobeast.R;
 import com.example.solobeast.ui.Home.Fragments.RewardFragment;
 import com.example.solobeast.databinding.ActivityMainBinding;
 import com.example.solobeast.ui.Auth.LoginAct;
+import com.example.solobeast.ui.Home.Fragments.SettingsFragment;
 import com.example.solobeast.ui.MailContactAct;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -80,7 +82,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     enum Fragments{
         HOME,
         REWARDS,
-        PROFILE
+        PROFILE,
+        SETTINGS
     }
 
     /**
@@ -116,6 +119,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(i);
             }
             if (determineFragment() == Fragments.PROFILE){
+                Toast.makeText(this,"",Toast.LENGTH_LONG).show();
+            }
+            if (determineFragment() == Fragments.SETTINGS){
                 Toast.makeText(this,"",Toast.LENGTH_LONG).show();
             }
         });
@@ -205,7 +211,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Log.i("MoveScreen", "MoveToSettingsScreen:Success");
                 //Intent moveToSettings = new Intent(this, SettingsActivity.class);
                 //startActivity(moveToSettings);
-                Toast.makeText(this,"Default settings is enabled in the current version",Toast.LENGTH_LONG).show();
+                replaceFragment(new SettingsFragment(),Fragments.SETTINGS);
+                addBtn.setVisibility(View.GONE);
+                //Toast.makeText(this,"Default settings is enabled in the current version",Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_onboarding:
                 Log.i("MoveScreen", "MoveToOnBoardScreen:Success");
@@ -272,6 +280,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case 2:
                 onWhichFragment = "PROFILE";
                 break;
+            case 3:
+                onWhichFragment = "SETTINGS";
+                break;
         }
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -287,6 +298,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public Fragments determineFragment(){
         Fragment rewardsFrag = (Fragment)getSupportFragmentManager().findFragmentByTag("REWARDS");
         Fragment profileFrag = (Fragment)getSupportFragmentManager().findFragmentByTag("PROFILE");
+        Fragment settingsFrag = (Fragment)getSupportFragmentManager().findFragmentByTag("SETTINGS");
+        if(settingsFrag != null && settingsFrag.isVisible()){
+            return Fragments.SETTINGS;
+        }
         if(rewardsFrag != null && rewardsFrag.isVisible()){
             return Fragments.REWARDS;
         }
