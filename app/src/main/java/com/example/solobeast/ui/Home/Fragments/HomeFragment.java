@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.solobeast.Adapters.RecyclerViewFunctionalities;
 import com.example.solobeast.Adapters.RewardAdapter;
 import com.example.solobeast.Adapters.TaskAdapter;
+import com.example.solobeast.Extras.Utils;
 import com.example.solobeast.Objects.Task;
 import com.example.solobeast.R;
 import com.example.solobeast.ui.DetailedTaskAct;
@@ -80,7 +81,30 @@ public class HomeFragment extends Fragment implements RecyclerViewFunctionalitie
                 +"/Tasks");
 
         //\\
-        this.retrieveData(this);
+        if(Utils.isConnectedToInternet(getContext()))
+            this.retrieveData(this);
+        else{
+            AlertDialog.Builder alertDialog;
+            alertDialog = new AlertDialog.Builder(getContext());
+
+            alertDialog
+                    .setMessage("You're not connected to internet, we can't proceed.")
+                    .setTitle("Internet Connection")
+                    .setCancelable(false)
+                    .setIcon(R.drawable.baseline_airplanemode_active_24);
+
+            alertDialog.setPositiveButton("I WILL TURN IT OFF", (dialogInterface, i) -> {
+                dialogInterface.cancel();
+                this.retrieveData(this);
+            });
+
+            alertDialog.setNeutralButton("OK", (dialogInterface, i) ->{
+                dialogInterface.cancel();
+            });
+            AlertDialog alert = alertDialog.create();
+            alert.show();
+
+        }
     }
 
     /**

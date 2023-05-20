@@ -43,7 +43,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            app:startIconDrawable="@drawable/ic_baseline_contact_mail"
             android:hint="Email"
             style="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -52,12 +52,12 @@
                 android:layout_height="wrap_content"
                 android:minHeight="48dp"
                 android:id="@+id/editTextTextEmailAddress_Register"
-                android:drawableLeft="@drawable/ic_baseline_contact_mail"
                 />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:startIconDrawable="@drawable/ic_baseline_password"
             android:hint="Password"
             app:passwordToggleEnabled="true"
             android:layout_marginTop="10dp"
@@ -68,7 +68,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/editTextTextPassword_Register"
                 android:minHeight="48dp"
-                android:drawableStart="@drawable/ic_baseline_password"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
         <Button

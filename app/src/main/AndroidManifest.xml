@@ -19,7 +19,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
+        android:supportsRtl="false"
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
@@ -75,7 +75,9 @@
                 <action android:name="android.intent.action.AIRPLANE_MODE" />
             </intent-filter>
         </receiver>
-
+        <receiver
+            android:name=".Extras.Receivers.AlarmReceiver"
+            />
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.solobeast.provider"

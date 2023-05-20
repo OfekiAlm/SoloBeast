@@ -2,11 +2,16 @@ package com.example.solobeast.ui.Auth;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -15,6 +20,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -136,8 +142,8 @@ public class RegisterAct extends AppCompatActivity {
 
         init();
 
-        // Register activity result launchers and take a picture from camera
-        RegisterOnResult_and_takePicFromCamera();
+        askForUserPermissions();
+
 
     }
 
@@ -155,7 +161,10 @@ public class RegisterAct extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editTextTextPassword_Register);
         circleImageView = findViewById(R.id.profile_image);
         takePicBtn = findViewById(R.id.profile_pic_fab);
+
         editTextPhoneNum = findViewById(R.id.editTextTextPhoneNum_Register);
+        InputFilter[] lengthFilter = new InputFilter []{new InputFilter.LengthFilter(9)}; // Restrict to 10 characters, for israeli numbers only
+        editTextPhoneNum.setFilters(lengthFilter);
 
         TextView moveToLogin = findViewById(R.id.move_screen);
         alertDialog = new AlertDialog.Builder(this);
@@ -203,8 +212,8 @@ public class RegisterAct extends AppCompatActivity {
             editTextPassword.requestFocus();
             return false;
         }
-        if (editTextPhoneNum.getText().length() != 10){
-            editTextPhoneNum.setError("Phone number should be 10 digits");
+        if (editTextPhoneNum.getText().length() != 9){
+            editTextPhoneNum.setError("Phone number should be 9 digits");
             editTextPhoneNum.requestFocus();
             return false;
         }
@@ -255,33 +264,47 @@ public class RegisterAct extends AppCompatActivity {
      If the user cancels the image selection from gallery, the gallery is opened again for image selection until the user chooses.
      */
     private void RegisterOnResult_and_takePicFromCamera(){
-        takePictureLauncher = registerForActivityResult(new ActivityResultContracts.TakePicture(), result -> {
-            if (result) {
-                // Camera photo was taken successfully
-                circleImageView.setImageURI(imageUri);
-                imageBitmap = BitmapFactory.decodeFile(imageUri.getPath());
-            } else {
-                // Camera operation was canceled or failed
-                alertDialog.show();
-                //let user re-select
-            }
-        });
-
-         pickImageLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(), result -> {
-            if (result != null) {
-                // Image was picked successfully from gallery
-                circleImageView.setImageURI(result);
-                try {
-                    imageBitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(result));
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
+        try {
+            takePictureLauncher = registerForActivityResult(new ActivityResultContracts.TakePicture(), result -> {
+                if (result) {
+                    // Camera photo was taken successfully
+                    circleImageView.setImageURI(imageUri);
+                    imageBitmap = BitmapFactory.decodeFile(imageUri.getPath());
+                } else {
+                    // Camera operation was canceled or failed
+                    alertDialog.show();
+                    //let user re-select
                 }
-            } else {
-                // Image picking was canceled
-                alertDialog.show();
-                //let user re-select
-            }
-        });
+            });
+        }catch (IllegalStateException e) {
+            // Handle the exception
+            e.printStackTrace(); // or use a logging mechanism
+            // Perform any necessary cleanup or error handling
+        }
+
+        try {
+            pickImageLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(), result -> {
+                if (result != null) {
+                    // Image was picked successfully from gallery
+                    circleImageView.setImageURI(result);
+                    try {
+                        imageBitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(result));
+                    } catch (FileNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    // Image picking was canceled
+                    alertDialog.show();
+                    //let user re-select
+                }
+            });
+        }catch (IllegalStateException e) {
+            // Handle the exception
+            e.printStackTrace(); // or use a logging mechanism
+            // Perform any necessary cleanup or error handling
+        }
+
+
     }
 
     /**
@@ -410,6 +433,42 @@ public class RegisterAct extends AppCompatActivity {
                 }
                 return imageRef.getDownloadUrl();
             });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 100) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    && grantResults[1] == PackageManager.PERMISSION_GRANTED
+                    && grantResults[2] == PackageManager.PERMISSION_GRANTED) {
+                // Permissions are granted
+                // Your code logic here
+                RegisterOnResult_and_takePicFromCamera();
+            } else {
+                // Permissions are denied
+                // Handle the denied permission case
+                Toast.makeText(this,"Please accept the camera and storage permission", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    public void askForUserPermissions(){
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            // Permissions are not granted, request them
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+            }, 100);
+        } else {
+            // Permissions are already granted
+
+            // Register activity result launchers and take a picture from camera
+            RegisterOnResult_and_takePicFromCamera();
+        }
     }
 
     /**
