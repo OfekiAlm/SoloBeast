@@ -1,4 +1,4 @@
-# AnroidSoloBeast
+# Android-SoloBeast
 
 ### Description
 Task rewarding app for your assessments on day to day life
@@ -10,23 +10,11 @@ Task rewarding app for your assessments on day to day life
 * [Setup](#setup)
 * [Usage](#usage)
 * [Project Status](#project-status)
-* [Acknowledgements](#acknowledgements)
 * [Contact](#contact)
 
 ## Technologies Used
 - XML&Java.
-- SQLITE.
 - Firebase.
-
-
-
-## Features
-List the ready features here:
-
-
-## Screenshot/s
-Not Yet.
-
 
 ## Setup
 Download android studio, and API 32 version according to this project is initialized with this in gradle
@@ -54,15 +42,13 @@ Should look like this after you're done.
 
 ## Usage
 You can just run the code 😃
+The code is well-documented with JavaDoc & for any other issues you can [Contact](#contact) me, or read the [project book](project_book.pdf).
 
 ## Project Status
-Project is: _Started_
+Project is: _Finished_
 
-## Acknowledgements
-- Many thanks to my Mom&Dad
 
 
 ## Contact
 Created by @Me - feel free to contact me!
-[Discord](https://discordapp.com/users/740404813753483276/)
 [Gmail](mailto:ofekalm100@gmail.com)

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "409639077532",
+    "firebase_url": "https://solobeast-android-default-rtdb.firebaseio.com",
+    "project_id": "solobeast-android",
+    "storage_bucket": "solobeast-android.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:409639077532:android:b746a79cb9c65407568f59",
+        "android_client_info": {
+          "package_name": "com.example.solobeast"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "409639077532-ve94km3dvnn6u2tqgne69id8i9tembrr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCazQwYwQypBX6GEVOkSv_kuhxDMyjqdJc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "409639077532-ve94km3dvnn6u2tqgne69id8i9tembrr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

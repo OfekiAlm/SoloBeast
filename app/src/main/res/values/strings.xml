@@ -1,4 +1,18 @@
 <resources>
     <string name="app_name">SoloBeast</string>
-    <string name="go_to_sign_up">Not signed up already? <font color='#8463f6'>Register</font></string>
+    <string name="go_to_sign_up"><b><font color='#000000'>Not signed up already?</font></b> <b> <font color='#E1574C'>Register</font></b></string>
+    <string name="action_nav_open">open</string>
+    <string name="action_nav_close">close</string>
+    <string name="login_email">email</string>
+    <string name="login_password">password</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="go_to_login"><b><font color='#000000'>Already have a user?</font></b> <b> <font color='#E1574C'> Login</font></b></string>
+    <string name="let_user_decide_airplane_mode">Do you want to let me determine if you\'re still working on this task or not? Click <font color='#8463f6'><b>here</b></font>\n\nThe ✈ mode will be enabled forcing you to concentrate. \nWarning: Don\'t even think to disable the ✈ mode.. 😉</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+
+    <string name="task_text_stop">Complete this task another time\n<font color='#17D4D4'>Click here</font></string>
+    <string name="notifications_settings">Notifications</string>
 </resources>

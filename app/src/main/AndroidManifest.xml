@@ -3,20 +3,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.solobeast">
 
-    <application
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:requestLegacyExternalStorage="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.Design.NoActionBar"
+        android:supportsRtl="false"
+        android:theme="@style/AppTheme"
         tools:targetApi="31">
-        <!-- ^ Removes ActionBar from all screens   (Theme)    -->
         <activity
-            android:name=".SplashAct"
+            android:name=".ui.DetailedRewardAct"
+            android:exported="false" />
+        <activity
+            android:name=".ui.MailContactAct"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.TaskTimerAct"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.DetailedTaskAct"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Extras.SplashAct"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,18 +56,37 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.Home.MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Design.NoActionBar"></activity>
+        <activity
+            android:name=".ui.Auth.LoginAct"
+            android:exported="true" />
+        <activity
+            android:name=".ui.Auth.RegisterAct"
+            android:exported="true" />
+
+        <service android:name=".Extras.Services.TimerService" />
+
+        <receiver
+            android:name=".Extras.Receivers.AirplaneModeReceiver"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.AIRPLANE_MODE" />
             </intent-filter>
-        </activity>
-        <activity android:name=".LoginAct"
-            android:exported="true"/>
-        <activity android:name=".RegisterAct"
-            android:exported="true"/>
+        </receiver>
+        <receiver
+            android:name=".Extras.Receivers.AlarmReceiver"
+            />
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.solobeast.provider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

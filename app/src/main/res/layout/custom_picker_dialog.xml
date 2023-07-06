@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="200dp"
+    android:layout_height="350dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="#5044e4"
+    android:id="@+id/custom_guide_dialog">
+
+    <NumberPicker
+        android:id="@+id/number_picker_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ok_btn"
+        android:text="Click to proceed"
+        android:layout_gravity="center"
+        android:layout_marginTop="150dp"
+        />
+
+</androidx.cardview.widget.CardView>
