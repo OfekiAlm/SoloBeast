@@ -1,6 +1,7 @@
 package com.example.solobeast.Adapters;
 import static com.example.solobeast.Objects.Task.*;
 
+import com.example.solobeast.Extras.Utils;
 import com.example.solobeast.Objects.Task;
 import com.example.solobeast.R;
 import com.example.solobeast.ui.TaskTimerAct;
@@ -105,21 +106,22 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
      The TaskViewHolder class represents a view holder for the RecyclerView items in the TaskAdapter.
      It holds references to the views in the item layout, and it sets listeners for user interactions.
      */
-    class TaskViewHolder extends RecyclerView.ViewHolder{
+    class TaskViewHolder extends RecyclerView.ViewHolder {
 
         /**
-         The TextViews that displays the properties of the task.
+         * The TextViews that displays the properties of the task.
          */
-        TextView taskNameTv, difficultyTv,timeTv;
+        TextView taskNameTv, difficultyTv, timeTv;
 
         /**
-         The ConstraintLayout field represents the layout of the task item in the TaskAdapter's RecyclerView.
+         * The ConstraintLayout field represents the layout of the task item in the TaskAdapter's RecyclerView.
          */
         ConstraintLayout constraintLayout;
 
         /**
          * Constructs a new TaskViewHolder object.
-         * @param itemView The View object corresponding to the task item layout.
+         *
+         * @param itemView                    The View object corresponding to the task item layout.
          * @param recyclerViewFunctionalities The interface implementing the RecyclerView functionalities.
          */
         public TaskViewHolder(@NonNull View itemView, RecyclerViewFunctionalities recyclerViewFunctionalities) {
@@ -143,13 +145,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             //Set listener for item click.
             itemView.setOnClickListener(view -> {
                 int pos = getBindingAdapterPosition();
-                if(checkInterfaceValid(recyclerViewFunctionalities)) recyclerViewFunctionalities.onItemClick(pos);
+                if (Utils.checkInterfaceValid(recyclerViewFunctionalities, getBindingAdapterPosition()))
+                    recyclerViewFunctionalities.onItemClick(pos);
             });
 
             //Set listener for item long click.
             itemView.setOnLongClickListener(view -> {
                 int pos = getBindingAdapterPosition();
-                if(checkInterfaceValid(recyclerViewFunctionalities)) recyclerViewFunctionalities.onItemLongClick(pos);
+                if (Utils.checkInterfaceValid(recyclerViewFunctionalities, getBindingAdapterPosition()))
+                    recyclerViewFunctionalities.onItemLongClick(pos);
                 return true;
             });
         }
@@ -163,27 +167,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
          */
         private void moveToTimerScreen(Task t) {
             Intent i = new Intent(context, TaskTimerAct.class);
-            i.putExtra("selected_task_name",t.getName());
-            i.putExtra("selected_task_desc",t.getDescription());
-            i.putExtra("selected_task_time",t.getTime());
-            i.putExtra("selected_task_diff",t.getDifficulty());
+            i.putExtra("selected_task_name", t.getName());
+            i.putExtra("selected_task_desc", t.getDescription());
+            i.putExtra("selected_task_time", t.getTime());
+            i.putExtra("selected_task_diff", t.getDifficulty());
             context.startActivity(i);
-        }
-
-        /**
-         Checks if the given RecyclerViewFunctionalities instance is not null and if the current binding adapter position
-         is not equal to RecyclerView.NO_POSITION.
-         @param recyclerViewFunctionalities an instance of RecyclerViewFunctionalities to be checked
-         @return true if the instance is not null and the current binding adapter position is valid, false otherwise
-         */
-        private boolean checkInterfaceValid(RecyclerViewFunctionalities recyclerViewFunctionalities){
-            if(recyclerViewFunctionalities != null){
-                int pos = getBindingAdapterPosition();
-                if(pos != RecyclerView.NO_POSITION){
-                    return true;
-                }
-            }
-            return false;
         }
     }
 }

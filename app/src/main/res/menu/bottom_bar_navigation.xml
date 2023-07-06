@@ -20,11 +20,11 @@
         android:contentDescription="add task"
         android:enabled="false"/>
 
-    <item
-        android:id="@+id/calendar"
-        android:icon="@drawable/baseline_calendar_today_24"
-        android:title="Calendar"
-        android:contentDescription="calendar"/>
+<!--    <item-->
+<!--        android:id="@+id/calendar"-->
+<!--        android:icon="@drawable/baseline_calendar_today_24"-->
+<!--        android:title="Calendar"-->
+<!--        android:contentDescription="calendar"/>-->
     <item
         android:id="@+id/homescreen"
         android:icon="@drawable/ic_baseline_home"

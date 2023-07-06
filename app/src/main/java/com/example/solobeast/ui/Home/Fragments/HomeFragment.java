@@ -44,7 +44,7 @@ import java.util.List;
 public class HomeFragment extends Fragment implements RecyclerViewFunctionalities {
 
     /** List of tasks */
-    List<Task> tasksList;
+    public static List<Task> tasksList;
 
     /** Adapter for the RecyclerView */
     TaskAdapter adapter;

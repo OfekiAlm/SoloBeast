@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -29,6 +30,7 @@ import com.example.solobeast.Extras.Receivers.AirplaneModeReceiver;
 import com.example.solobeast.Objects.User;
 import com.example.solobeast.ui.DetailedRewardAct;
 import com.example.solobeast.ui.DetailedTaskAct;
+import com.example.solobeast.ui.Home.Fragments.CalendarFragment;
 import com.example.solobeast.ui.Home.Fragments.HomeFragment;
 import com.example.solobeast.ui.Home.Fragments.ProfileFragment;
 import com.example.solobeast.R;
@@ -83,8 +85,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         HOME,
         REWARDS,
         PROFILE,
-        SETTINGS
+        SETTINGS,
+        CALENDAR
     }
+    SearchView searchView;
 
     /**
      * onCreate is called when the activity is starting. It initializes various components and
@@ -142,6 +146,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     replaceFragment(new RewardFragment(),Fragments.REWARDS);
                     addBtn.setVisibility(View.VISIBLE);
                     break;
+//                case R.id.calendar:
+//                    replaceFragment(new CalendarFragment(),Fragments.CALENDAR);
             }
             return true;
         });
@@ -282,6 +288,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case 3:
                 onWhichFragment = "SETTINGS";
+                break;
+            case 4:
+                onWhichFragment = "CALENDAR";
                 break;
         }
         FragmentManager fragmentManager = getSupportFragmentManager();

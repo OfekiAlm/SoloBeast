@@ -250,7 +250,7 @@ public class DetailedRewardAct extends AppCompatActivity {
     }
 
     /**
-     Sets the add icon to the submit button in the current activity.
+     Sets the add icon to the add button in the current activity.
      */
     private void setAddIconDrawable() {
         if(submitFloatingFormBtn != null) {
@@ -259,7 +259,7 @@ public class DetailedRewardAct extends AppCompatActivity {
     }
 
     /**
-     Sets the update icon to the submit button in the current activity.
+     Sets the update icon to the update button in the current activity.
      */
     private void setUpdateIconDrawable() {
         if(submitFloatingFormBtn != null) {

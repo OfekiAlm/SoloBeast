@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.solobeast.Extras.Utils;
 import com.example.solobeast.Objects.Reward;
 import com.example.solobeast.R;
 import com.example.solobeast.ui.Home.MainActivity;
@@ -141,13 +142,13 @@ public class RewardAdapter extends RecyclerView.Adapter<RewardAdapter.RewardView
             //Set listener for item click.
             itemView.setOnClickListener(view -> {
                 int pos = getBindingAdapterPosition();
-                if(checkInterfaceValid(recyclerViewFunctionalities)) recyclerViewFunctionalities.onItemClick(pos);
+                if(Utils.checkInterfaceValid(recyclerViewFunctionalities,getBindingAdapterPosition())) recyclerViewFunctionalities.onItemClick(pos);
             });
 
             //Set listener for item long click.
             itemView.setOnLongClickListener(view -> {
                 int pos = getBindingAdapterPosition();
-                if(checkInterfaceValid(recyclerViewFunctionalities)) recyclerViewFunctionalities.onItemLongClick(pos);
+                if(Utils.checkInterfaceValid(recyclerViewFunctionalities,getBindingAdapterPosition())) recyclerViewFunctionalities.onItemLongClick(pos);
                 return true;
             });
         }
@@ -187,19 +188,5 @@ public class RewardAdapter extends RecyclerView.Adapter<RewardAdapter.RewardView
             alert.show();
         }
 
-        /**
-         * Method to check if the RecyclerViewFunctionalities interface is valid and the item position is not RecyclerView.NO_POSITION.
-         * @param recyclerViewFunctionalities The interface implementing the RecyclerView functionalities.
-         * @return True if the interface is valid and the position is not RecyclerView.NO_POSITION, false otherwise.
-         */
-        private boolean checkInterfaceValid(RecyclerViewFunctionalities recyclerViewFunctionalities){
-            if(recyclerViewFunctionalities != null){
-                int pos = getBindingAdapterPosition();
-                if(pos != RecyclerView.NO_POSITION){
-                    return true;
-                }
-            }
-            return false;
-        }
     }
 }

@@ -297,7 +297,7 @@ public class TaskTimerAct extends AppCompatActivity {
      @param time A string representing a time in the format "hh:mm".
      @return An integer representing the total number of seconds represented by the input time.
      */
-    public int indicateTimeAsSeconds(String time){
+    private int indicateTimeAsSeconds(String time){
         int timerTime = 0;
         List<String> arrayList = Arrays.asList(time.split(":"));
         String hours = arrayList.get(0);
